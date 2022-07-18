@@ -1,0 +1,131 @@
+i {
+	color: aqua;
+}
+
+.card-estudiantes {
+	background-color: slategrey;
+}
+
+
+.table-container {
+	width: 80%;
+	border-radius: 2px;
+}
+
+.table-content {
+	padding-left: 15%;
+}
+
+*,
+*:after,
+*:before {
+	box-sizing: border-box;
+}
+
+
+
+img {
+	max-width: 100%;
+	display: block;
+	align-content: center;
+}
+
+.card-list {
+	width: 90%;
+	max-width: 400px;
+	text-align: center;
+}
+
+.card-arti {
+	background-color: #FFF;
+	box-shadow: 0 0 0 1px rgba(#000, .05), 0 20px 50px 0 rgba(#000, .1);
+	border-radius: 15px;
+	overflow: hidden;
+	padding: 1.25rem;
+	position: center;
+	transition: .15s ease-in;
+
+}
+
+.card-arti:hover {
+	box-shadow: 0 0 0 2px #16C79A, 0 10px 60px 0 rgba(#000, .1);
+	transform: translatey(-5px);
+}
+
+.card-image {
+	/*border-radius: 10px;*/
+	overflow: hidden;
+	text-align: center;
+	align-content: center;
+	
+}
+
+.card-header {
+	margin-top: 1.5rem;
+	display: flex;
+	text-align: center;
+	
+	justify-content: space-between;
+
+}
+
+a {
+	font-weight: 600;
+	font-size: 1rem;
+	/*line-height: 1.25;*/
+	padding-right: 1rem;
+	text-decoration: none;
+	color: inherit;
+	will-change: transform;
+
+}
+
+a:after {
+	content: "";
+	position: center;
+	left: 0;
+	top: 0;
+	right: 0;
+	bottom: 0;
+}
+
+svg {
+	width: 1em;
+	height: 1em;
+}
+
+
+.card-footer {
+	margin-top: 1.25rem;
+	border-top: 1px solid #ddd;
+	padding-top: 1.25rem;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.card-meta {
+	display: flex;
+	align-items: center;
+	color: #787878;
+}
+
+.card-meta:first-child:after {
+
+	display: block;
+	content: "";
+	width: 4px;
+	height: 4px;
+	border-radius: 50%;
+	background-color: currentcolor;
+	margin-left: .75rem;
+	margin-right: .75rem;
+
+}
+
+svg {
+	flex-shrink: 0;
+	width: 1em;
+	height: 1em;
+	margin-right: .25em;
+}

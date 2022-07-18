@@ -1,0 +1,13 @@
+<div class="btnGroup" mat-align-tabs="center">
+    <button class="button" routerLink="/inicio">Inicio</button>
+    <button class="button" routerLink="/visualizar-presidentes">Presidentes FEDEC</button>
+    <button mat-button [matMenuTriggerFor] ="institucionMenu">Institución</button>
+    <mat-menu #institucionMenu="matMenu" yPosition="below" routerLink="/visualizar-instituciones">
+        <button mat-menu-item class="button" routerLink="/visualizar-instituciones">Instituciones</button>       
+        <button mat-menu-item class="button" routerLink="/visualizar-representantes">Representantes</button>        
+    </mat-menu>    
+    <button class="button" routerLink="/visualizarcifra-estudiantes">Cifras Estudiantes</button>
+    <button class="button"  routerLink="/visualizarcifra-docentes">Cifras Docentes</button>
+    <button class="button"  routerLink="/visualizarcifra-administrativos">Cifras Administrativos</button>
+    <hr style="border-color: rgba(72, 59, 219, 0.466);">
+</div>

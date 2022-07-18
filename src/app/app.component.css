@@ -1,0 +1,46 @@
+.mat-card-content>:last-child:not(.mat-card-footer),
+.mat-card>:last-child:not(.mat-card-footer) {
+    margin-bottom: 0;
+}
+
+.mat-card-content>:first-child,
+.mat-card>:first-child {
+    margin-top: 0;
+}
+
+.login-div[_ngcontent-cib-c1] {
+    width: 580px;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.5);
+    border: rgb(52, 22, 159);
+    border-style: solid;
+    border-radius: 10px;
+    text-align: center;
+}
+
+div {
+    display: block;
+}
+
+.mat-card {
+    background: #fff;
+    color: rgba(0, 0, 0, .87);
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.img-inicio {
+    height: 200px;
+}
+
+.img-header {
+
+    max-height: 100px;
+    background-position: top;
+
+}
+
+.header {
+    padding: 70px;
+    color: white;
+    font-size: 30px;
+}

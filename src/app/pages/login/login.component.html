@@ -1,0 +1,38 @@
+<br _ngcontent-cib-c1>
+<mat-card class="matcarlog">
+<div _ngcontent-cib-c1 class="login-div">
+    <div _ngcontent-cib-c1 ovalidate ng-reflect-form="[object Object]" class="form-login" (keydown.enter)="authService.Login(email.value, clave.value)">
+        <br _ngcontent-cib-c1>
+        <label class="lb">Iniciar Sesión</label>
+        <br _ngcontent-cib-c1>
+        <br _ngcontent-cib-c1> 
+        <br _ngcontent-cib-c1>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <mat-icon matSuffix aria-hidden="false" aria-label="Example email icon">email</mat-icon>
+            <input matInput type="email" placeholder="Ex. email@correo.com" [(ngModel)]="usuario.email" #email required>
+        </mat-form-field>
+        <br _ngcontent-cib-c1="">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Ingrese su contraseña"
+                [(ngModel)]="usuario.clave" #clave required>
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="hide" >
+                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+        </mat-form-field>
+        <br _ngcontent-cib-c1=""><br _ngcontent-cib-c1="">
+        <div>
+            <a href="/forgot-password" >¿Ha olvidado su contraseña?</a>
+          </div>
+        
+        <br _ngcontent-cib-c1=""><br _ngcontent-cib-c1="">
+
+        <button mat-raised-button class="btnIngresar" (keypress)="authService.Login(email.value, clave.value)" color="primary"
+            (click)="authService.Login(email.value, clave.value)">Ingresar</button>
+    </div>
+    <!--authService.Login(email.value, clave.value)-->
+</div>
+</mat-card>
+<router-outlet></router-outlet>

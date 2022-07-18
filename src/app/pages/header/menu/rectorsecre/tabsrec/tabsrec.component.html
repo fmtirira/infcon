@@ -1,0 +1,12 @@
+<div class="btnGroup" mat-align-tabs="center">
+    <button class="button" routerLink="/inicio">Inicio</button>
+    <button mat-button [matMenuTriggerFor] ="institucionMenu">Institución</button>
+    <mat-menu #institucionMenu="matMenu" yPosition="below">
+        <button mat-menu-item class="button" routerLink="/editar-institucion">Editar Institución</button>
+        <button mat-menu-item class="button" routerLink="/listar-representantes">Representantes</button>
+    </mat-menu>    
+    <button class="button" routerLink="/cifras-estudiantes">Cifras Estudiantes</button>
+    <button class="button"  routerLink="/cifras-docentes">Cifras Docentes</button>
+    <button class="button"  routerLink="/cifras-administrativos">Cifras Administrativos</button>
+    <hr style="border-color: rgba(72, 59, 219, 0.466);">
+</div>

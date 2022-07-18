@@ -1,0 +1,184 @@
+<app-tabsrec></app-tabsrec>
+<mat-card>
+    <form [formGroup]="editarInstitucionForm">
+        <!--(ngSubmit)="OnSaveInstitucion(editarInstitucionForm.value)"-->
+        <input type="hidden" formControlName="idInstitucion">
+        <mat-card class="card-unico">
+            <mat-form-field appearance="outline" *ngIf="infoInstitucion">
+                <mat-label>Código AMIE</mat-label>
+                <input matInput formControlName="codigoAMIE" readonly="true">
+            </mat-form-field>&nbsp;&nbsp;&nbsp;
+            <mat-form-field class="full-width left" appearance="outline">
+                <mat-label>Nombre de Institución</mat-label>
+                <input matInput type="text" class="mayusculas" placeholder="Ingrese nombre de institución"
+                    formControlName="nomInstitucion">
+                <!--<mat-error *ngIf="editarInstitucionForm.invalid" style="font-size: 10px ;">{{msgValidateNombre()}}
+                </mat-error>-->
+            </mat-form-field>
+        </mat-card>
+        <mat-card>
+            <mat-label style="font-weight: bold;">Ubicación Política Administrativa</mat-label>
+            <br>
+            <br>
+            <mat-form-field class="provincia-width" appearance="outline">
+                <mat-label>Provincia</mat-label>
+                <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)">-->
+                <input matInput type="text" formControlName="nomProvincia" readonly="true">
+                <!--<mat-error *ngIf="editariForm.get('nomProvincia')?.hasError('required')" style="font-size: 10px ;">
+                        Seleccione la provincia</mat-error>-->
+            </mat-form-field>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-form-field class="direccion-width" appearance="outline">
+                <mat-label>Dirección de Institución</mat-label>
+                <input matInput type="text" class="mayusculas" placeholder="Ingrese direccion de institución"
+                    style="text-align: center;" formControlName="direccionInstitucion">
+                <!--<mat-error *ngIf="editarInstitucionForm.invalid" style="font-size: 10px ;">{{msgValidateNombre()}}
+                    </mat-error>-->
+            </mat-form-field>
+            <br>
+            <br>
+            <mat-form-field class="provincia-width" appearance="outline">
+                <mat-label>Tipo de Educación</mat-label>
+                <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)">-->
+                <mat-select formControlName="tipoEducacio">
+                    <mat-option *ngFor="let tipo of tipoEducacion" [value]=tipo.nomTipoEducacion>
+                        {{tipo.nomTipoEducacion}}
+                    </mat-option>
+                </mat-select>
+                <!--<mat-error *ngIf="editariForm.get('nomProvincia')?.hasError('required')" style="font-size: 10px ;">
+                        Seleccione la provincia</mat-error>-->
+            </mat-form-field>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-form-field class="sostenimiento-width" appearance="outline">
+                <mat-label>Sostenimiento</mat-label>
+                <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)">-->
+                <mat-select formControlName="sostenimiento">
+                    <!--provincias esta declarado en registrop.component.ts como arrays vacios y aca lo estoy utilizando-->
+                    <mat-option *ngFor="let sostenimiento of sostenimientos" [value]=sostenimiento.nomSostenimeinto>
+                        {{sostenimiento.nomSostenimeinto}}
+                    </mat-option>
+                </mat-select>
+                <!--<mat-error *ngIf="editariForm.get('nomProvincia')?.hasError('required')" style="font-size: 10px ;">
+                        Seleccione la provincia</mat-error>-->
+            </mat-form-field>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-form-field class="provincia-width" appearance="outline">
+                <mat-label>Zona INEC</mat-label>
+                <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)">-->
+                <mat-select formControlName="zonaInec">
+                    <mat-option *ngFor="let zonaInec of zonasInec" [value]=zonaInec.nomZonaInec>
+                        {{zonaInec.nomZonaInec}}
+                    </mat-option>
+                </mat-select>
+                <!--<mat-error *ngIf="editariForm.get('nomProvincia')?.hasError('required')" style="font-size: 10px ;">
+                        Seleccione la provincia</mat-error>-->
+            </mat-form-field>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-form-field class="provincia-width" appearance="outline">
+                <mat-label>Jurisdicción</mat-label>
+                <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)">-->
+                <mat-select formControlName="jurisdiccion">
+                    <!--provincias esta declarado en registrop.component.ts como arrays vacios y aca lo estoy utilizando-->
+                    <mat-option *ngFor="let jurisdiccion of jurisdicciones" [value]=jurisdiccion.nomJurisdiccion>
+                        {{jurisdiccion.nomJurisdiccion}}
+                    </mat-option>
+                </mat-select>
+                <!--<mat-error *ngIf="editariForm.get('nomProvincia')?.hasError('required')" style="font-size: 10px ;">
+                        Seleccione la provincia</mat-error>-->
+            </mat-form-field>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-form-field class="provincia-width" appearance="outline">
+                <mat-label>Inmueble Edificio</mat-label>
+                <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)">-->
+                <mat-select  #tenenciaEdificio formControlName="tenenciaEdificio">
+                    <mat-option *ngFor="let inmueble of inmuebleEdi" [value]=inmueble.nomInmueble>
+                        {{inmueble.nomInmueble}}
+                    </mat-option>
+                </mat-select>
+                <!--<mat-error *ngIf="editariForm.get('nomProvincia')?.hasError('required')" style="font-size: 10px ;">
+                        Seleccione la provincia</mat-error>-->
+            </mat-form-field>
+            <!--<mat-error *ngIf="editarInstitucionForm.invalid" style="font-size: 10px ;">{{msgValidateNombre()}}</mat-error>-->
+
+        </mat-card>
+        <br>
+        <mat-card class="card-generales">
+            <mat-label style="font-weight: bold;">Datos Generales</mat-label>
+            <br>
+            <div style="display: flex; flex-direction:row;">
+                <mat-card class="card-general">
+                    <mat-toolbar color="primary" style="height:30px; width: 393px;" class="tool-modalidad">
+                        <mat-card-subtitle class="text-color">Nivel de Educación
+                        </mat-card-subtitle>
+                    </mat-toolbar>
+                    <mat-card style="width: 200%;">
+
+                        <mat-form-field class="nivel-width" appearance="outline">
+                            <mat-select formControlName="nivelEducacion" placeholder="Nivel de educacion"
+                                (ngModelChange)="NivelEducacionVal($event)" multiple size="5">
+                            <mat-optgroup *ngFor="let group of nivelesEducacion" [disabled]="group.disabled">{{group.nombre}}
+                                    <mat-option *ngFor="let nivel of group.nivel" [value]="nivel.id">
+                                        {{nivel.nomNivelEducacion}}
+                                    </mat-option>
+                               </mat-optgroup>
+                                <!--<section *ngFor="let grupo of nivelesEducacion">
+                                    <li style="font-weight: bold;">{{grupo.nombre}} &nbsp;</li>
+                                    <section *ngFor="let nivelesEducacion of grupo.nivel">
+                                        <mat-option class="example-margin"
+                                            value="{{nivelesEducacion.id}}"> &nbsp;
+                                            {{nivelesEducacion.nomNivelEducacion}}
+                                        </mat-option>
+                                    </section>
+                                </section>-->
+                            </mat-select>
+                        </mat-form-field>
+                    </mat-card>
+                    &nbsp;
+                </mat-card>
+                <mat-card class="card-modalidad">
+                    <mat-toolbar color="primary" style="height:30px" class="tool-modalidad">
+                        <mat-card-subtitle class="text-color">Modalidad
+                        </mat-card-subtitle>
+                    </mat-toolbar>
+                    <br>
+                    <mat-form-field class="nivel-width" appearance="outline">
+                        <mat-select (ngModelChange)="ModalidadVal($event)" multiple size="4"
+                            formControlName="modalidad">
+                            <mat-option class="example-margin" *ngFor="let modalidadI of modalidades"
+                                [value]=modalidadI.nomModalidad>
+                                {{modalidadI.nomModalidad}} &nbsp;
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-card>
+                <mat-card class="card-jornada">
+                    <mat-toolbar color="primary" style="height:30px" class="tool-modalidad">
+                        <mat-card-subtitle id="example-radio-group-label" class="text-color">Jornada
+                        </mat-card-subtitle>
+                    </mat-toolbar>
+                    <br>
+                    <mat-form-field class="nivel-width" appearance="outline">
+                        <mat-select (ngModelChange)="JornadaVal($event)" formControlName="jornada" multiple size="3">
+                            <mat-option class="example-margin" *ngFor="let jornadaI of jornadas"
+                                [value]=jornadaI.nomJornada>
+                                {{jornadaI.nomJornada}} &nbsp;
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </mat-card>
+            </div>
+            <br>
+            <br>
+            <br>
+        </mat-card>
+        
+        <div style="text-align: center">
+            <button mat-raised-button class="btnIngresar" color="primary" type="submit"
+                (click)="OnSaveInsti(editarInstitucionForm.value)">
+                <mat-icon>save</mat-icon>
+                Guardar Cambios
+            </button>
+        </div>
+
+    </form>
+</mat-card>

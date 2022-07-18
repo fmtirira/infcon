@@ -1,0 +1,76 @@
+<app-tabsrec></app-tabsrec>
+<br>
+<br>
+<br>
+<div class="table-content table-container">
+    <Form [formGroup]="administrativoForm">
+        <p-table [value]="dataNivel" dataKey="idAdmin" editMode="row" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th hidden>Id</th>                    
+                    <th>Hombres</th>
+                    <th>Mujeres</th>
+                    <th>Total</th>
+                    <th style="width:8rem">Acción</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-cifras let-editing="editing" let-ri="rowIndex" id="tabla">
+                <tr [pEditableRow]="cifras">
+                    <td hidden>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="cifras.idAdmin" readonly formControlName="idAdmin">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{cifras.idAdmin}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>                
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" id="hombres" [(ngModel)]="cifras.adminHombres"
+                                    formControlName="adminHombres" min="1" pattern="^[0-9]+" max="999">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{cifras.adminHombres}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" id="adminMujeres" [(ngModel)]="cifras.adminMujeres"
+                                    formControlName="adminMujeres" min="1" pattern="^[0-9]+" max="999">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{cifras.adminMujeres}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" readonly id="adminTotal" formControlName="adminTotal">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{cifras.adminTotal}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td style="text-align:center">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                            (click)="onRowEditInit(cifras)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                            (click)="onRowEditSave(cifras)"
+                            class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                            (click)="onRowEditCancel(cifras, ri)"
+                            class="p-button-rounded p-button-text p-button-danger"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </Form>
+</div>

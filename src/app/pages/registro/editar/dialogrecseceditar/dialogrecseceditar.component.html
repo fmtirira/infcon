@@ -1,0 +1,40 @@
+<div _ngcontent-cib-c1 class="login-div" style="text-align: center">
+    <h1> Editar Usuario Rector-Secretario</h1>
+
+    <form [formGroup]="editarecsecreForm" (ngSubmit)="OnSaveUsuario(editarecsecreForm.value)">
+        <input type="hidden" formControlName="uid">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombres Rector/a</mat-label>
+            <input class="oracion" matInput type="text" placeholder="Nombres Rector/a" formControlName="nombres">
+            <mat-error *ngIf="editarecsecreForm.invalid" style="font-size: 10px ;">{{msgValidateNombre()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombres Secretario/a</mat-label>
+            <input class="oracion" matInput type="text" placeholder="Nombres Secretario/a" formControlName="apellidos">
+            <mat-error *ngIf="editarecsecreForm.invalid" style="font-size: 10px ;">{{msgValidateApellido()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" placeholder="Correo electrónico" formControlName="email" readonly="true">            
+        </mat-form-field>
+        <br>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Seleccione Institución</mat-label>
+            <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)"> acabo de agregar la funcion change-->
+            <mat-select formControlName="nomInstitucion" aria-readonly="true">
+                <!--provincias esta declarado en registrop.component.ts como arrays vacios y aca lo estoy utilizando-->
+                <mat-option *ngFor="let institucion of instituciones" [value]="institucion.nomInstitucion" disabled="true">
+                    {{institucion.nomInstitucion | uppercase}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editarecsecreForm.get('nomInstitucion')?.hasError('required')" style="font-size: 10px ;">
+                Seleccione la Institución</mat-error>
+        </mat-form-field>
+        <br>
+        <button mat-raised-button type="submit" class="btnIngresar" color="primary"
+            [disabled]="editarecsecreForm.invalid">Guardar</button>
+        <button mat-raised-button color="warn" mat-dialog-close="" style="margin-left: 20px;">Cancelar</button>
+    </form>
+
+</div>

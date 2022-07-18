@@ -1,0 +1,67 @@
+<div _ngcontent-cib-c1 class="login-div" style="text-align: center">
+    <h1> Registrar Representante</h1>
+
+    <form [formGroup]="registroRepresentanteForm">        
+        <input type="hidden" formControlName="uid">
+        <input type="hidden" formControlName="idInstitucion">
+        <input  type="hidden" formControlName="nomInstitucion">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Prefijo</mat-label>
+            <input matInput type="text" placeholder="Ingrese Prefijo" [(ngModel)]="datosRepresentante.prefijo" #prefijo
+                formControlName="prefijo">
+            <mat-hint align="start"><strong>*Sra Sr Mg Ing etc...</strong> </mat-hint>
+            <mat-error *ngIf="registroRepresentanteForm.invalid" style="font-size: 10px ;">{{msgValidatePrefijo()}}
+            </mat-error>
+        </mat-form-field>
+       
+        <mat-form-field class="full-nombres" appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input matInput type="text" placeholder="Ingrese Nombres del Representante"
+                [(ngModel)]="datosRepresentante.nombres" #nombres formControlName="nombres">
+            <mat-error *ngIf="registroRepresentanteForm.invalid" style="font-size: 10px ;">{{msgValidateNombres()}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-nombres" appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input matInput type="text" placeholder="Ingrese Apellidos del Representante"
+                [(ngModel)]="datosRepresentante.apellidos" #apellidos formControlName="apellidos">
+            <mat-error *ngIf="registroRepresentanteForm.invalid" style="font-size: 10px ;">{{msgValidateApellidos()}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Correo Electrónico</mat-label>
+            <input matInput type="text" placeholder="Ingrese correo electrónico del Representante"
+                [(ngModel)]="datosRepresentante.email" #email formControlName="email">
+            <mat-error *ngIf="registroRepresentanteForm.invalid" style="font-size: 10px ;">{{msgValidateEmail()}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Teléfono</mat-label>
+            <input matInput type="text" placeholder="Ingrese Teléfono del Representante"
+                [(ngModel)]="datosRepresentante.telefono" #telefono formControlName="telefono">
+            <mat-error *ngIf="registroRepresentanteForm.invalid" style="font-size: 10px ;">Formato Incorrecto
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Celular</mat-label>
+            <input matInput type="text" placeholder="Ingrese celular del Representante"
+                [(ngModel)]="datosRepresentante.celular" #email formControlName="celular">
+            <mat-error *ngIf="registroRepresentanteForm.invalid" style="font-size: 10px ;">Formato Incorrecto
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>--Seleccione Cargo--</mat-label>
+            <mat-select [(ngModel)]="datosRepresentante.cargo" #cargo formControlName="cargo">
+                <mat-option *ngFor="let cargo of cargoList" value={{cargo}}>
+                    {{cargo}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="registroRepresentanteForm.invalid" style="font-size: 10px ;">{{msgValidateCargo()}}
+            </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button type="submit" class="btnIngresar" color="primary"
+            [disabled]="registroRepresentanteForm.invalid" (click)="CrearRepresentante()">Guardar</button>
+        <button mat-raised-button color="warn" style="margin-left: 20px;" mat-dialog-close="">Cancelar</button>
+    </form>
+</div>

@@ -1,0 +1,22 @@
+.mat-tab-group {
+    margin-bottom: 48px;
+  }
+  .btnGroup .button {
+    background-color: #ffffff; /* Green */
+    border-style: none none none none;
+    color: rgb(0, 0, 0);  
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px; 
+    cursor: pointer;
+    /*float: left;*/
+    font-family: sans-serif;    
+  }
+  
+  .btnGroup .button:hover {
+    background-color: rgba(25, 5, 255, 0.158);
+    /*border-bottom-color: rgba(72, 59, 219, 0.466);   
+    border-bottom: 2px solid #5633d3b2;*/
+  }

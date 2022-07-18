@@ -1,0 +1,10 @@
+.full-width {
+  width: 100%;
+}
+.oracion{
+  text-transform: capitalize;
+}
+.mayusculas{
+text-transform: uppercase;
+}
+  

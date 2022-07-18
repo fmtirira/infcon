@@ -1,0 +1,98 @@
+.mayusculas{
+    text-transform: uppercase;
+    }
+.container-ubicacion {
+    height: 280px;
+    width: 800px;
+    border: 1px groove rgb(255, 255, 255);
+    position: relative;    
+}
+.container-datos {
+    height: 260px;
+    width: 800px;
+    border: 1px groove rgb(255, 255, 255);
+    position: relative;    
+}
+.label {
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    height: 20px;
+    width: 255;
+    background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(255, 255, 255);
+    text-align: left;
+}
+.parent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+.full-width{
+    width: 40%;
+}
+.nivel-width{
+    width: 100%;
+}
+.provincia-width{
+    width: 25%;
+    margin-left: 6px;
+}
+.sostenimiento-width{
+    width: 25%;
+    margin-left: 6px;
+}
+.direccion-width{
+    width: 53%;
+    margin-left: 6px;
+}
+.left{
+    margin-left: 20px;
+}
+.btnIngresar{
+    border:3px rgb(46, 45, 45);
+    margin-left: 20px;
+}
+.card-nivel{
+    width: 145px;
+    border:4px rgb(255, 255, 255);
+    border-radius: 0%;
+    background-color: rgb(255, 255, 255); 
+    margin-left: 20px;  
+}
+.card-unico{
+    box-shadow: 0 0px 0px 0px rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0);
+}
+.card-general {
+    box-shadow: 0 0px 0px 0px rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0);
+  }
+.card-modalidad{
+    width: 145px;
+    height: 175px;
+    border:4px rgb(255, 255, 255);
+    border-radius: 0%;
+    background-color: rgb(255, 255, 255);
+    margin-left: 250px;
+}
+.card-jornada{
+    width: 145px;
+    height: 175px;
+    border:4px rgb(255, 255, 255);
+    border-radius: 0%;
+    background-color: rgb(255, 255, 255);
+    margin-left: 40px;
+}
+.card-general{
+    width: 180px;
+    margin-left: 6px;
+}
+.text-color{
+    margin-top: 15px;
+    margin-left: 20px;
+    color: white;   
+}
+.tool-modalidad{    
+    margin: none;
+}
+

@@ -1,0 +1,54 @@
+<div _ngcontent-cib-c1 class="login-div" style="text-align: center">
+    <h1> Registrar Usuario Rector-Secretario</h1>
+
+    <form [formGroup]="registrorecsecreForm">
+        <input type="hidden" formControlName="uid">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombres Rector/a</mat-label>
+            <input class="oracion" matInput type="text" placeholder="Nombres Rector/a"
+                [(ngModel)]="datosRectorSecre.nombres" #nombres formControlName="nombres">
+            <mat-error *ngIf="registrorecsecreForm.invalid" style="font-size: 10px ;">{{msgValidateNombre()}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombres Secretario/a</mat-label>
+            <input class="oracion" matInput type="text" placeholder="Nombres Secretario/a"
+                [(ngModel)]="datosRectorSecre.apellidos" #apellidos formControlName="apellidos">
+            <mat-error *ngIf="registrorecsecreForm.invalid" style="font-size: 10px ;">{{msgValidateApellido()}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" placeholder="Correo electrónico" [(ngModel)]="datosRectorSecre.email" #email
+                formControlName="email">
+            <mat-error *ngIf="registrorecsecreForm.invalid" style="font-size: 10px ;">{{msgValidateEmail()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input matInput type="password" placeholder="Contraseña" [(ngModel)]="datosRectorSecre.clave" #clave
+                formControlName="clave">
+            <mat-hint align ="start"><strong>*mínimo 8 caracteres</strong> </mat-hint>
+            <mat-error *ngIf="registrorecsecreForm.invalid" style="font-size: 10px ;">{{msgValidateClave()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Seleccione Institución</mat-label>
+            <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)"> acabo de agregar la funcion change-->
+            <mat-select [(ngModel)]="datosRectorSecre.nomInstitucion"  formControlName="nomInstitucion" (selectionChange)="select($event.value)">
+                <!--provincias esta declarado en registrop.component.ts como arrays vacios y aca lo estoy utilizando-->
+                <mat-option *ngFor="let institucion of instituciones"  [value]="institucion.idInstitucion">
+                    {{institucion.nomInstitucion | uppercase}}                  
+                    
+                </mat-option>
+            </mat-select>            
+            <!--<mat-error *ngIf="registrorecsecreForm.get('idInstitucion')?.hasError('required')"
+                style="font-size: 10px ;">
+                Seleccione la provincia</mat-error>-->
+        </mat-form-field>
+        <br>
+        <button mat-raised-button type="submit" class="btnIngresar" color="primary" (click)="RegistrarRectorSecre()"
+            [disabled]="registrorecsecreForm.invalid">Guardar</button>
+        <button mat-raised-button color="warn" mat-dialog-close="" style="margin-left: 20px;">Cancelar</button>
+    </form>
+
+</div>

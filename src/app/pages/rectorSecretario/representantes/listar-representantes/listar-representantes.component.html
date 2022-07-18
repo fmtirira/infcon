@@ -1,0 +1,100 @@
+<app-tabsrec></app-tabsrec>
+
+<div style="padding: 20px 30px;">
+    <div>
+        <button mat-raised-button color="primary" style="text-align: center;" (click)="OpenRepresentante()">
+            <mat-icon>add</mat-icon> Nuevo Representante
+        </button>
+        <mat-form-field style="width: 20%; margin-left: 65%;">
+            <mat-icon matSuffix aria-hidden="false" aria-label="Example email icon">search</mat-icon>
+            <input matInput placeholder="Búsqueda Representante" (keyup)="applyFilter($event)">
+        </mat-form-field>
+    </div>
+</div>
+<div class="table-content">
+    <div class="table-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">No.</th>
+                <td mat-cell *matCellDef="let element; index as i">
+                    {{i+1}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="prefijo">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Prefijo
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.prefijo |uppercase}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="nombres">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Nombres</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.nombres| titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="apellidos">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Apellidos</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.apellidos | titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="cargo">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Cargo</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.cargo | titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Email</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.email}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="telefono">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Teléfono</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.telefono}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="celular">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Celular</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.celular}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="nomInstitucion">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Institución</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.nomInstitucion | titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="accion">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; text-align: center;">
+                    Acción</th>
+                <td mat-cell *matCellDef="let element">
+
+                    <button mat-icon-button (click)="OnEdit(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="OnDelete(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+        </mat-paginator>
+    </div>
+</div>

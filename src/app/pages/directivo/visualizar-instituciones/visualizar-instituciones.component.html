@@ -1,0 +1,81 @@
+<app-tabs-directivo></app-tabs-directivo>
+<div style="padding: 20px 30px;">
+    <div>
+        <mat-form-field style="width: 20%; margin-left: 65%;">
+            <mat-icon matSuffix aria-hidden="false" aria-label="Example email icon">search</mat-icon>
+            <input matInput placeholder="Búsqueda Institución" (keyup)="applyFilter($event)">
+        </mat-form-field>
+    </div>
+</div>
+<div class="table-content">
+    <div class="table-container mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">No.</th>
+                <td mat-cell *matCellDef="let element; index as i">
+                    {{i+1}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="codigoAMIE">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">Código AMIE
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.codigoAMIE |uppercase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="nomInstitucion">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;width: 20%;">Nombre de Institución</th>
+                <td mat-cell *matCellDef="let element" style="width: 20%;">
+                    {{element.nomInstitucion | titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="nomProvincia">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">Provincia</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.nomProvincia}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="direccionInstitucion">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;width: 20%;">Dirección</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.direccionInstitucion | titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="zonaInec">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">Zona INEC</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.zonaInec}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="modalidad">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small; width: 8%;">Modalidad</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.modalidad}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="jornada">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">Jornada</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.jornada}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="jurisdiccion">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">Jurisdicción</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.jurisdiccion}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sostenimiento">
+                <th mat-header-cell *matHeaderCellDef style="font-weight: bold; font-size: small;">Sostenimiento</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.sostenimiento}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+        </mat-paginator>
+    </div>
+</div>

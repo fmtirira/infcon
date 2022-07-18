@@ -1,0 +1,34 @@
+
+  .full-width {
+    width: 80%;
+  }
+  .matcarlog{
+    max-width: 380px;
+    margin: auto;
+  }
+  .btnIngresar {
+    
+    margin: auto;
+    font-size: 15px;
+    margin-left: 8px;
+    min-width: 120px;
+    align-items: center;
+  }
+  .lb{
+    color: rgb(41, 17, 124);
+    font-weight: bolder;
+    font-size: large;
+  }
+  .login-div[_ngcontent-cib-c1] {
+    width: 380px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.5);
+    border: rgb(52, 22, 159);
+    border-style: solid;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.mat-card:not([class*=mat-elevation-z]) {
+  box-shadow: 0 0px 0px 0px rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0);
+}

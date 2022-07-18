@@ -1,0 +1,45 @@
+<div _ngcontent-cib-c1 class="login-div" style="text-align: center">
+    <h1> Editar Presidente</h1>
+    <form [formGroup]="editarpForm" (ngSubmit)="OnSaveUsuario(editarpForm.value)"> 
+        <input type="hidden" formControlName="uid">
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Nombres</mat-label>
+            <input class="oracion" matInput type="text" placeholder="Nombres" formControlName="nombres">
+                <mat-error *ngIf="editarpForm.invalid" style="font-size: 10px ;">{{msgValidateNombre()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Apellidos</mat-label>
+            <input class="oracion" matInput type="text" placeholder="Apellidos" formControlName="apellidos">
+                <mat-error *ngIf="editarpForm.invalid" style="font-size: 10px ;">{{msgValidateApellido()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input matInput type="email" placeholder="Correo electrónico" formControlName="email" readonly="true">                
+        </mat-form-field> 
+        <br>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Cédula</mat-label>
+            <input matInput type="text" placeholder="Cédula" formControlName="cedula">
+            <mat-error *ngIf="editarpForm.invalid" style="font-size: 10px ;">{{msgValidateCedula()}}</mat-error>
+        </mat-form-field>
+        <br>
+        <mat-form-field class="full-width" appearance="outline">
+            <mat-label>--Seleccione Provincia--</mat-label> 
+            <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)"> acabo de agregar la funcion change-->
+            <mat-select formControlName="nomProvincia">
+                <!--provincias esta declarado en registrop.component.ts como arrays vacios y aca lo estoy utilizando-->
+                <mat-option *ngFor="let provincia of provincias" value={{provincia.nomProvincia}}>
+                    {{provincia.nomProvincia}}
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="editarpForm.get('nomProvincia')?.hasError('required')" style="font-size: 10px ;">
+                Seleccione la provincia</mat-error>
+        </mat-form-field>    
+        <br>
+        <button mat-raised-button type="submit" class="btnIngresar" color="primary"
+            [disabled]="editarpForm.invalid">Guardar</button>
+        <button mat-raised-button color="warn" style="margin-left: 20px;" mat-dialog-close="">Cancelar</button>
+    </form>
+</div>

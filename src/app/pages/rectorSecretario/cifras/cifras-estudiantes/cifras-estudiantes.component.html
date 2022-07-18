@@ -1,0 +1,140 @@
+<app-tabsrec></app-tabsrec>
+<!-- <section *ngFor="let item of dataNivel">
+    <li>Id {{item.id}}</li>
+    <li> nombre: {{item.nomNivelEducacion}}</li>
+    {{item.hombres}}
+    {{item.mujeres}}
+
+</section> -->
+<div style="display: flex; flex-direction:row; text-align: center;">
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-users fa-3x" style="position: center;"></i>
+            </div>
+            <div class="card-header">
+                <a style="padding: 0px 35%;"> {{sumaTotal}} Estudiantes</a>
+            </div>
+            <!-- <div class="card-footer">
+            <div class="card-meta card-meta--date">
+                {{infoInsti.nomInstitucion |uppercase}}
+            </div>
+        </div> -->
+        </article>
+    </div>
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-person fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a style="padding: 0px 35%;"> {{sumaHombres}} Hombres</a>
+            </div>
+            <!-- <div class="card-footer">
+            <div class="card-meta card-meta--date">
+                {{infoInsti.nomInstitucion |uppercase}}
+            </div>
+        </div> -->
+        </article>
+    </div>
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-person-dress fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a style="padding: 0px 35%;"> {{sumaMujeres}} Mujeres </a>
+            </div>
+            <!-- <div class="card-footer">
+            <div class="card-meta card-meta--date">
+                {{infoInsti.nomInstitucion |uppercase}}
+            </div>
+        </div> -->
+        </article>
+    </div>
+</div>
+<br>
+<div class="table-content table-container">
+    <Form [formGroup]="nivelesForm">
+        <p-table [value]="dataNivel" dataKey="id" editMode="row" responsiveLayout="scroll">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th hidden>Id</th>
+                    <th>Nivel Educativo</th>
+                    <th>Hombres</th>
+                    <th>Mujeres</th>
+                    <th>Total</th>
+                    <th style="width:8rem">Acción</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-nivel let-editing="editing" let-ri="rowIndex" id="tabla">
+                <tr [pEditableRow]="nivel">
+                    <td hidden>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="nivel.id" readonly formControlName="id">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{nivel.id}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="text" [(ngModel)]="nivel.nomNivelEducacion" readonly
+                                    formControlName="nomNivelEducacion">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{nivel.nomNivelEducacion}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" id="hombres" [(ngModel)]="nivel.hombres"
+                                    formControlName="hombres" min="0" pattern="^[0-9]+" max="999">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{nivel.hombres}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" id="mujeres" [(ngModel)]="nivel.mujeres"
+                                    formControlName="mujeres" min="0" pattern="^[0-9]+" max="999">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{nivel.mujeres}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+                    <td>
+                        <p-cellEditor>
+                            <ng-template pTemplate="input">
+                                <input pInputText type="number" readonly id="total" formControlName="total">
+                            </ng-template>
+                            <ng-template pTemplate="output">
+                                {{nivel.total}}
+                            </ng-template>
+                        </p-cellEditor>
+                    </td>
+
+                    <td style="text-align:center">
+                        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                            (click)="onRowEditInit(nivel)" class="p-button-rounded p-button-text"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                            (click)="onRowEditSave(nivel)"
+                            class="p-button-rounded p-button-text p-button-success mr-2"></button>
+                        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                            (click)="onRowEditCancel(nivel, ri)"
+                            class="p-button-rounded p-button-text p-button-danger"></button>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </Form>
+</div>
