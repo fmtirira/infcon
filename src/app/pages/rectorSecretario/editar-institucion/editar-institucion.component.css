@@ -1,18 +1,21 @@
-.mayusculas{
-    text-transform: uppercase;
-    }
+.mayusculas {
+    text-transform: capitalize;
+}
+
 .container-ubicacion {
     height: 280px;
     width: 800px;
     border: 1px groove rgb(255, 255, 255);
-    position: relative;    
+    position: relative;
 }
+
 .container-datos {
     height: 260px;
     width: 800px;
     border: 1px groove rgb(255, 255, 255);
-    position: relative;    
+    position: relative;
 }
+
 .label {
     position: absolute;
     top: -10px;
@@ -23,76 +26,179 @@
     border: 2px solid rgb(255, 255, 255);
     text-align: left;
 }
+
 .parent {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-  }
-.full-width{
-    width: 40%;
 }
-.nivel-width{
+
+.full-width {
+    width: 50%;
+}
+
+.nivel-width {
     width: 100%;
 }
-.provincia-width{
+
+.card-nivel-educacion {
+    width: 30%;
+}
+
+.provincia-width {
     width: 25%;
     margin-left: 6px;
 }
-.sostenimiento-width{
+
+.sostenimiento-width {
     width: 25%;
     margin-left: 6px;
 }
-.direccion-width{
+
+.direccion-width {
     width: 53%;
     margin-left: 6px;
 }
-.left{
-    margin-left: 20px;
-}
-.btnIngresar{
-    border:3px rgb(46, 45, 45);
-    margin-left: 20px;
-}
-.card-nivel{
-    width: 145px;
-    border:4px rgb(255, 255, 255);
-    border-radius: 0%;
-    background-color: rgb(255, 255, 255); 
-    margin-left: 20px;  
-}
-.card-unico{
-    box-shadow: 0 0px 0px 0px rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0);
-}
-.card-general {
-    box-shadow: 0 0px 0px 0px rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0), 0 0px 0px 0 rgba(0,0,0,0);
-  }
-.card-modalidad{
-    width: 145px;
-    height: 175px;
-    border:4px rgb(255, 255, 255);
-    border-radius: 0%;
-    background-color: rgb(255, 255, 255);
-    margin-left: 250px;
-}
-.card-jornada{
-    width: 145px;
-    height: 175px;
-    border:4px rgb(255, 255, 255);
-    border-radius: 0%;
-    background-color: rgb(255, 255, 255);
-    margin-left: 40px;
-}
-.card-general{
-    width: 180px;
-    margin-left: 6px;
-}
-.text-color{
-    margin-top: 15px;
-    margin-left: 20px;
-    color: white;   
-}
-.tool-modalidad{    
-    margin: none;
+
+.left {
+    margin-left: 7%;
 }
 
+.btnIngresar {
+    border: 3px rgb(46, 45, 45);
+    margin-left: 20px;
+}
+
+.card-nivel {
+    width: 145px;
+    border: 4px rgb(255, 255, 255);
+    border-radius: 0%;
+    background-color: rgb(255, 255, 255);
+    margin-left: 20px;
+}
+
+.card-unico {
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
+    width: 65%;
+    justify-items: center;
+}
+
+.nivel {
+    width: 100%;
+}
+
+.card-modalidad {
+    width: 20%;
+    height: 30%;
+    border: 4px rgb(255, 255, 255);
+    border-radius: 0%;
+    background-color: rgb(255, 255, 255);
+    margin-left: 4%;
+    align-items: center;
+    text-align: center;
+}
+
+.card-jornada {
+    width: 20%;
+    height: 30%;
+    border: 4px rgb(255, 255, 255);
+    border-radius: 0%;
+    margin-left: 4%;
+}
+
+.card-general {
+    width: 35%;
+}
+
+.card-generales {
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.datos-generales {    
+    margin-top: 3%;    
+    display: flex;
+    flex-direction: row;
+}
+
+.card-inicio {
+    margin-left: 5%;
+    margin-right: 5%;
+    display: flex;
+    flex-direction: row;
+}
+.card-ubicacion{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.mat-card {
+    box-shadow: 0 0px 0px 0px rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0), 0 0px 0px 0 rgba(0, 0, 0, 0);
+}
+
+.text-color {
+    color: white;
+    margin-top: 3%;
+    margin-left: 35%;
+}
+
+.text-center {
+    text-align: center;
+    align-items: center;
+}
+
+.tool-modalidad {
+    margin: none;
+    height: 30px;
+    width: 100%;
+}
+
+.tool-nivel {
+    margin: none;
+    height: 30px;
+    width: 100%;
+}
+
+.avatar-subir {
+    position: relative;
+    left: 20px;
+    max-width: 20%;
+    /* margin: 10px auto 30px; */
+}
+
+.avatar-subir .avatar-editar input {
+    display: none;
+}
+
+.avatar-subir .avatar-preview {
+    width: 150px;
+    height: 150px;
+
+    border-radius: 10%;
+    overflow: hidden;
+    border: 2px solid rgba(255, 255, 255, 0.87);
+    -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    -moz-box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+}
+
+.avatar-subir .avatar-preview>div {
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.card-imagen {
+    margin-top: 3%;
+    width: 15%;
+    align-items: center;
+}
+.btn-image{
+margin-left: 22%;
+}
+.btn-image:hover{
+    margin-left: 22%;
+    background-color: rgb(233, 227, 227);
+    }

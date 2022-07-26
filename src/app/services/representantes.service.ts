@@ -32,10 +32,11 @@ export class RepresentantesService {
     this.Representante.subscribe(list => {
       this.arrayRepresentante = list.map(item => {
         return {
-          id: item.idInstitucion,
+          idInstitucion: item.idInstitucion,
           uid: item.uid,
-          nombre: item.nomInstitucion,
-          email: item.email
+          nomInstitucion: item.nomInstitucion,
+          email: item.email,
+          cargo: item.cargo
         }
       });
     });
@@ -49,7 +50,6 @@ export class RepresentantesService {
   }
 
   GetAllRepresentantes() {
-
     return this.Representante = this.RepreCollection.snapshotChanges()
       .pipe(map(changes => {
         return changes.map(action => {
@@ -58,6 +58,9 @@ export class RepresentantesService {
           return data;
         });
       }));
+  }
+  GetRepresentantesProvincia(nomProvincia: string): Observable<any> {
+    return this.afs.collection('Representantes', ref => ref.where('nomProvincia', '==', nomProvincia).orderBy('nombres', 'asc')).snapshotChanges();
   }
   //traer por id de insitucion
   GetRepresentantes(idInstitucion: string): Observable<any> {

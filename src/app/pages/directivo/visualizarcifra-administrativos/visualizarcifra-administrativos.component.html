@@ -1,2 +1,75 @@
-<app-tabs-directivo></app-tabs-directivo>
-<p>visualizarcifra-administrativos works!</p>
+<app-tabs-directivo *ngIf="activar"></app-tabs-directivo>
+<div class="card-list" *ngIf="activar">
+    <article class="card-arti">
+        <div class="card-image">
+            <i class="fa-solid fa-users fa-3x" style="position: center;"></i>
+        </div>
+        <div class="card-header">
+            <a> {{totalAdministrativos}} Administrativos</a>
+        </div>
+    </article>
+</div>
+<br>
+<div class="table-content" *ngIf="activar">
+    <div class="table-container mat-elevation-z8">
+        <div class="div-header">
+            <div class="div-button">
+                <button mat-raised-button icon="pi pi-file-excel"
+                    (click)="exporter.exportTable('xlsx', {fileName:'administrativos', sheet: 'lista_administrativos', Props: {Author: 'CONFEDEC'}})">
+                    <i class="fa-solid fa-file-excel fa-lg"></i>
+                    &nbsp;&nbsp; Exportar</button>
+            </div>
+            <div class="div-buscar">
+                <mat-form-field class="form-field">
+                    <mat-icon matSuffix aria-hidden="false" aria-label="Example email icon">search</mat-icon>
+                    <input matInput placeholder="Búsqueda" (keyup)="applyFilter($event)">
+                </mat-form-field>
+            </div>
+        </div>
+        <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter"
+            class="mat-elevation-z8">
+            <ng-container matColumnDef="numero" class="mat-column-numero">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">
+                    No.</th>
+                <td mat-cell *matCellDef="let element; index as i" style="text-align: center;">
+                    {{i+1}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="nomInstitucion">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">
+                    Institución
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.nomInstitucion | titlecase}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="adminHombres">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">
+                    Hombres</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.adminHombres}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="adminMujeres">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">
+                    Mujeres</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.adminMujeres}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="adminTotal">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">
+                    Total</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.adminTotal}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+        </mat-paginator>
+    </div>
+    <br>
+</div>

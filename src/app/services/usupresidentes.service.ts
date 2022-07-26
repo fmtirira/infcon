@@ -18,7 +18,7 @@ export class UsupresidentesService {
   public isEdit!: boolean;
   public isNew!: boolean;
   
-  arrayUsuariosPresidente: any[];
+  arrayUsuariosPresidente:any[];
 
   constructor(
     private afs: AngularFirestore,
@@ -26,8 +26,23 @@ export class UsupresidentesService {
     public router: Router,
     public ngZone: NgZone
   ) {
-    this.arrayUsuariosPresidente=[];
-    this.GetUsuariosPresidentes();
+    this.arrayUsuariosPresidente =[];
+    this.UsuarioCollection = this.afs.collection<Usuarios>('Usuarios', ref => (ref.orderBy('nombres', 'asc') && ref.where('roles','==','presidente')));
+    this.Usuario = this.UsuarioCollection.valueChanges();
+    this.Usuario.subscribe(list => {
+      this.arrayUsuariosPresidente = list.map(item => {
+        return {
+          uid: item.uid,
+          email: item.email,
+          nomProvincia: item.nomProvincia,
+          apellidos: item.apellidos,
+          cedula: item.cedula,
+          nombres: item.nombres,
+         // clave: item.clave,
+          cargo: item.roles          
+        }
+      })
+    })
    }
 
    GetUsuariosPresidentes(){

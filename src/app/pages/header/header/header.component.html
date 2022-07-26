@@ -1,15 +1,22 @@
 <body>
   <mat-toolbar class="header" color="primary" ng-reflect-color="primary">
-    <img class="img-header" src="./assets/LogoConfedec.png"> 
-    <span class="example-spacer">   </span> 
-      <button mat-raised-button *ngIf="login" (click)="authService.SignOut()" color="primary" >
-        <mat-icon>exit_to_app</mat-icon>
-        Cerrar Sesión
-      </button> 
- 
+    <img class="img-header" src="./assets/LogoConfedec.png">
+    <span class="example-spacer"> </span>
+    <div class="div-menu" *ngIf="login">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>settings</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">        
+        <button mat-menu-item (click)="Perfil()">
+          <mat-icon>perm_identity</mat-icon>
+          <span>{{email}}</span>
+        </button>
+        <button mat-menu-item (click)="authService.SignOut()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>Cerrar Sesión</span>
+        </button>
+      </mat-menu>
+      
+    </div>    
   </mat-toolbar>
-  <!--<div _ngcontent-cib-c1 class="login-div">-->
-
-
-  <!--</div>-->
 </body>

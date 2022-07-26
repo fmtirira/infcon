@@ -10,7 +10,6 @@ import { Subscription } from 'rxjs';
 import { InstitucionesI } from 'src/app/models/institucion.interface';
 import { Usuarios } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { DialogosService } from 'src/app/services/dialogos.service';
 import { RepresentanteService } from 'src/app/services/representante.service';
 import { RepresentantesService } from 'src/app/services/representantes.service';
 import { CrearRepresentanteComponent } from '../crear-representante/crear-representante.component';
@@ -37,7 +36,6 @@ export class ListarRepresentantesComponent implements OnInit {
     private afs: AngularFirestore,
     public representanteService: RepresentantesService,
     public representanteSvc: RepresentanteService,
-    public dialogoService: DialogosService,
     public toastr: ToastrService,
     private dialogRepre: MatDialog
   ) {
@@ -48,53 +46,12 @@ export class ListarRepresentantesComponent implements OnInit {
 
     this.GetRepre();
   }
-  /* async GetRepresentantes(){
-     const idUsuario =  await this.authService.GetUid();
-     console.log('idUsuario', idUsuario);
-     if (idUsuario) {
- 
-       this.idUsu = idUsuario;
-       this.getDoc<Usuarios>('Usuarios', this.idUsu).subscribe(resUsuario => {
-         if (resUsuario) {
-           this.infoUsu = resUsuario;
-           this.idInstitucion = this.infoUsu.idInstitucion;
-         }
-         this.representanteService.GetRepresentantes(this.idInstitucion)
-           .subscribe(repre => {
-             this.representantes = [];
-             repre.forEach((element: any) => {
-               this.representantes.push({
-                 uid: element.payload.doc.uid,
-                 ...element.payload.doc.data()
-               });
-             });
-             this.dataSource.data = repre;
-           });
-         this.dataSource.paginator = this.paginator;
-         console.log('this.idInstitucion', this.idInstitucion);
-       });
- 
-        this.representanteService.GetRepresentantes(this.idInstitucion)
-         .subscribe(repre => {
-           this.representantes =[];
-           repre.forEach((element:any) => {
-             this.representantes.push({
-               uid: element.payload.doc.uid,
-               ...element.payload.doc.data()
-             });
-           });
-           this.dataSource.data = repre;
-         });
-       this.dataSource.paginator = this.paginator; 
- 
-     }
-   }*/
- async GetRepre() {
+  async GetRepre() {
     const idUsuario = await this.authService.GetUid();
     if (idUsuario) {
       this.idUsu = idUsuario;
-      this.getDoc<Usuarios>('Usuarios', this.idUsu).subscribe(resUsuario => { 
-        if (resUsuario){
+      this.getDoc<Usuarios>('Usuarios', this.idUsu).subscribe(resUsuario => {
+        if (resUsuario) {
           this.infoUsu = resUsuario;
           this.idInstitucion = resUsuario.idInstitucion;
           this.subscription.add(
@@ -106,16 +63,11 @@ export class ListarRepresentantesComponent implements OnInit {
                   ...element.payload.doc.data()
                 })
               })
-              console.log('repre',this.representantes);
               this.dataSource.data = this.representantes;
-              
-            })
-            
-          )
-          this.dataSource.paginator = this.paginator; 
-         }
+            }))
+          this.dataSource.paginator = this.paginator;
+        }
       })
-      
     }
   }
 

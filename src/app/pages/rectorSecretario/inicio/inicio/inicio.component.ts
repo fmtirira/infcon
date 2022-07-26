@@ -1,9 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
-import { parse } from 'path';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { EmailAuthProvider } from '@firebase/auth';
 import { Observable } from 'rxjs';
+import { CifrasEstudiantesI } from 'src/app/models/cifrasEstudiantes.interface';
 import { InstitucionesI, Nivel } from 'src/app/models/institucion.interface';
+import { Usuarios } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { CifrasEstudiantesService } from 'src/app/services/cifras-estudiantes.service';
 import { InstitucionesService } from 'src/app/services/instituciones.service';
+
 
 @Component({
   selector: 'app-inicio',
@@ -11,26 +16,37 @@ import { InstitucionesService } from 'src/app/services/instituciones.service';
   styleUrls: ['./inicio.component.css']
 })
 export class InicioComponent implements OnInit {
+  idUsu!: any;
+  rolUsu!: any;
   totalInstituciones: any;
-  dataNivel: Nivel[] | undefined;
-  dataNivelSierra: Nivel[] | undefined;
-  dataNivelCosta: Nivel[] | undefined;
-  dataNivelAmazonia: Nivel[] | undefined;
-  dataNivelInsular: Nivel[] | undefined;
+  dataCifrasSierra: CifrasEstudiantesI | undefined;
+  dataCifrasCosta: CifrasEstudiantesI | undefined;
+  dataCifrasInsular: CifrasEstudiantesI | undefined;
+  dataCifrasAmazonia: CifrasEstudiantesI | undefined;
+
+  institucionesSierra = 0;
+  institucionesCosta = 0;
+  institucionesInsular = 0;
+  institucionesAmazonia = 0;
+
   sumaTotal!: number;
   sumaMujeres!: number;
   sumaHombres!: number;
   total!: number;
-
-
-  public InstitucionCollection!: AngularFirestoreCollection<InstitucionesI>;
-  public InstitucionDocument!: AngularFirestoreDocument<InstitucionesI>;
-  public InstitucionInfo!: Observable<any[]>;
-  public myNivelOf$!: Observable<any>;
+  datosDivEstudiantes = false;
+  datosDivInstituciones = false;
+  tabsDirectivo = false;
+  tabsRector = false;
+  tabsPresidente = false;
+  tabsAdmin = false;
   public institucionElements!: InstitucionesI[];
-  public nivel!: Nivel[];
-  Sierra!: ['AZUAY', 'BOLÍVAR', 'CAÑAR', 'CARCHI', 'CHIMBOZARO', 'COTOPAXI', 'IMBABURA', 'LOJA', 'PICHINCHA', 'TUNGURAHUA'];
-  cifraTotal: [] = [];
+  public institucionSierra!: InstitucionesI[];
+  public institucionCosta!: InstitucionesI[];
+  public institucionAmazonia!: InstitucionesI[];
+  public institucionInsular!: InstitucionesI[];
+  private institucionRegiones: any = '';
+
+  cifraTotal: CifrasEstudiantesI[] = [];
   totalEstudiantes = 0;
   totalEstudiantesSierra = 0;
   totalEstudiantesCosta = 0;
@@ -39,81 +55,130 @@ export class InicioComponent implements OnInit {
   totalEstudiantesMujeres = 0;
   totalEstudiantesHombres = 0;
   selectProvincia!: any;
-  filtro!: any;
+
   constructor(
     private afs: AngularFirestore,
-    private institucionService: InstitucionesService
+    private institucionService: InstitucionesService,
+    private cifrasEService: CifrasEstudiantesService,
+    private authService: AuthService
   ) { }
 
-  ngOnInit(): void {
-
-    this.institucionService.GetAllInstituciones()
-      .subscribe(institucion => {
-        this.institucionElements = institucion;
-        institucion.forEach(prov => {
-          this.selectProvincia = prov.nomProvincia;
-          console.log('--->', this.selectProvincia);
-
-          if (prov.nomProvincia === 'AZUAY' || prov.nomProvincia === 'BOLÍVAR' || prov.nomProvincia === 'CAÑAR' || prov.nomProvincia === 'CARCHI'
-            || prov.nomProvincia === 'CHIMBOZARO' || prov.nomProvincia === 'COTOPAXI' || prov.nomProvincia === 'IMBABURA' || prov.nomProvincia === 'LOJA'
-            || prov.nomProvincia === 'PICHINCHA' || prov.nomProvincia === 'TUNGURAHUA') {
-            if (prov.nomProvincia) {
-              this.dataNivelSierra = prov.niveles;
-              this.dataNivelSierra?.forEach(sierraCifras => {
-                this.totalEstudiantesSierra = this.totalEstudiantesSierra + sierraCifras.total;
-              });
-              console.log('ES SIERRA', prov);
+  ngOnInit() {
+    this.getInfoUser();
+    this.cifrasEService.GetAllCifrasEstudiantes()
+      .subscribe(cifrasE => {
+        cifrasE.forEach(cifrasProv => {
+          this.selectProvincia = cifrasProv.nomProvincia;
+          if (cifrasProv.nomProvincia === 'AZUAY' || cifrasProv.nomProvincia === 'BOLÍVAR' || cifrasProv.nomProvincia === 'CAÑAR' || cifrasProv.nomProvincia === 'CARCHI'
+            || cifrasProv.nomProvincia === 'CHIMBOZARO' || cifrasProv.nomProvincia === 'COTOPAXI' || cifrasProv.nomProvincia === 'IMBABURA' || cifrasProv.nomProvincia === 'LOJA'
+            || cifrasProv.nomProvincia === 'PICHINCHA' || cifrasProv.nomProvincia === 'TUNGURAHUA') {
+            if (cifrasProv.nomProvincia) {
+              this.dataCifrasSierra = cifrasProv;
+              this.totalEstudiantesSierra = this.totalEstudiantesSierra + this.dataCifrasSierra.total;
             }
           }
-
-          if (prov.nomProvincia === 'EL ORO' || prov.nomProvincia === 'ESMERALDAS' || prov.nomProvincia === 'GUAYAS' || prov.nomProvincia === 'LOS RÍOS'
-            || prov.nomProvincia === 'MANABÍ' || prov.nomProvincia === 'SANTA ELENA' || prov.nomProvincia === 'SANTO DOMINGO DE LOS TSÁCHILAS') {
-            if (prov.nomProvincia) {
-              this.dataNivelCosta = prov.niveles;
-              this.dataNivelCosta?.forEach(costaCifras => {
-                this.totalEstudiantesCosta = this.totalEstudiantesCosta + costaCifras.total;
-              });
-              console.log('ES COSTA', prov);
+          if (cifrasProv.nomProvincia === 'EL ORO' || cifrasProv.nomProvincia === 'ESMERALDAS' || cifrasProv.nomProvincia === 'GUAYAS' || cifrasProv.nomProvincia === 'LOS RÍOS'
+            || cifrasProv.nomProvincia === 'MANABÍ' || cifrasProv.nomProvincia === 'SANTA ELENA' || cifrasProv.nomProvincia === 'SANTO DOMINGO DE LOS TSÁCHILAS') {
+            if (cifrasProv.nomProvincia) {
+              this.dataCifrasCosta = cifrasProv;
+              this.totalEstudiantesCosta = this.totalEstudiantesCosta + this.dataCifrasCosta.total;
             }
           }
-               
-          if (prov.nomProvincia === 'SUCUMBÍOS' || prov.nomProvincia === 'MORONA SANTIAGO' || prov.nomProvincia === 'NAPO' 
-          || prov.nomProvincia === 'ORELLANA' || prov.nomProvincia === 'PASTAZA' || prov.nomProvincia === 'ZAMORA CHINCHIPE') {
-          if (prov.nomProvincia) {
-            this.dataNivelAmazonia = prov.niveles;
-            this.dataNivelAmazonia?.forEach(amazoniaCifras => {
-              this.totalEstudiantesAmazonia= this.totalEstudiantesAmazonia + amazoniaCifras.total;
-            });
-            console.log('ES AMAZONIA', prov);
-          }          
-        }
-        
-        if (prov.nomProvincia === 'GALÁPAGOS') {
-          if (prov.nomProvincia) {
-            this.dataNivelInsular = prov.niveles;
-            this.dataNivelInsular?.forEach(insularCifras => {
-              this.totalEstudiantesInsular= this.totalEstudiantesInsular + insularCifras.total;
-            });
-            console.log('ES AMAZONIA', prov);
-          }          
-        }
-        });
-        console.log('->num ', this.institucionElements.length);
-        this.institucionElements.forEach(res => {
-          this.dataNivel = res.niveles; //guardo en dataNivel el array de objetos de niveles que tiene cada institucion
-          this.dataNivel?.forEach(c => { //recorro el array dataNivel
-            this.totalEstudiantes = this.totalEstudiantes + c.total; //acumulo el total en una variable global e imprimo en la vista el totalEstudiantes (variable)
-            this.totalEstudiantesHombres = this.totalEstudiantesHombres + c.hombres;
-            this.totalEstudiantesMujeres = this.totalEstudiantesMujeres + c.mujeres;
-            console.log('c ->', c.total);
-            console.log('suma tot', this.totalEstudiantes);
-          });
-        });
-        this.totalInstituciones = institucion.length;
+          if (cifrasProv.nomProvincia === 'SUCUMBÍOS' || cifrasProv.nomProvincia === 'MORONA SANTIAGO' || cifrasProv.nomProvincia === 'NAPO'
+            || cifrasProv.nomProvincia === 'ORELLANA' || cifrasProv.nomProvincia === 'PASTAZA' || cifrasProv.nomProvincia === 'ZAMORA CHINCHIPE') {
+            if (cifrasProv.nomProvincia) {
+              this.dataCifrasAmazonia = cifrasProv;
 
+              this.totalEstudiantesAmazonia = this.totalEstudiantesAmazonia + this.dataCifrasAmazonia.total;
+
+            }
+          }
+          if (cifrasProv.nomProvincia === 'GALÁPAGOS') {
+            if (cifrasProv.nomProvincia) {
+              this.dataCifrasInsular = cifrasProv;
+              this.totalEstudiantesInsular = this.totalEstudiantesInsular + this.dataCifrasInsular.total;
+            }
+          }
+        });
+
+        this.cifraTotal = cifrasE;
+
+        this.cifraTotal?.forEach(c => { //recorro el array cifraTotal
+          this.totalEstudiantes = this.totalEstudiantes + c.total; //acumulo el total en una variable global e imprimo en la vista el totalEstudiantes (variable)
+          this.totalEstudiantesHombres = this.totalEstudiantesHombres + c.hombres;
+          this.totalEstudiantesMujeres = this.totalEstudiantesMujeres + c.mujeres;
+
+        });
 
       });
+    this.institucionService.GetAllInstituciones()
+      .subscribe(institucion => {
+        this.institucionesInsular = 0;
+        this.institucionesAmazonia = 0;
+        this.institucionesSierra = 0;
+        this.institucionesCosta = 0;
+        this.institucionElements = institucion;
+        this.institucionElements.forEach(institucionProv => {
+          if (institucionProv.nomProvincia === 'AZUAY' || institucionProv.nomProvincia === 'BOLÍVAR' || institucionProv.nomProvincia === 'CAÑAR'
+            || institucionProv.nomProvincia === 'CARCHI' || institucionProv.nomProvincia === 'CHIMBOZARO' || institucionProv.nomProvincia === 'COTOPAXI'
+            || institucionProv.nomProvincia === 'IMBABURA' || institucionProv.nomProvincia === 'LOJA' || institucionProv.nomProvincia === 'PICHINCHA'
+            || institucionProv.nomProvincia === 'TUNGURAHUA') {
+            this.institucionesSierra++;
+          }
+          if (institucionProv.nomProvincia === 'EL ORO' || institucionProv.nomProvincia === 'ESMERALDAS' || institucionProv.nomProvincia === 'GUAYAS'
+            || institucionProv.nomProvincia === 'LOS RÍOS' || institucionProv.nomProvincia === 'MANABÍ' || institucionProv.nomProvincia === 'SANTA ELENA'
+            || institucionProv.nomProvincia === 'SANTO DOMINGO DE LOS TSÁCHILAS') {
+            this.institucionesCosta++;
+          }
+          if (institucionProv.nomProvincia === 'SUCUMBÍOS' || institucionProv.nomProvincia === 'MORONA SANTIAGO' || institucionProv.nomProvincia === 'NAPO'
+            || institucionProv.nomProvincia === 'ORELLANA' || institucionProv.nomProvincia === 'PASTAZA' || institucionProv.nomProvincia === 'ZAMORA CHINCHIPE'
+          ) {
+            this.institucionesAmazonia++;
+          }
+          if (institucionProv.nomProvincia === 'GALÁPAGOS') {
+            this.institucionesInsular++;
+          }
+        })
 
+        this.totalInstituciones = institucion.length;
+      });
+
+  }
+
+  MostrarEstudiantes() {
+    return (this.datosDivEstudiantes = true) && (this.datosDivInstituciones = false);
+  }
+  MostrarInstituciones() {
+    return (this.datosDivInstituciones = true) && (this.datosDivEstudiantes = false);
+  }
+
+  getInfoUser() {
+    
+    this.authService.StateUser().subscribe(res => {
+      this.idUsu = res?.uid;
+      const path = 'Usuarios';
+      
+      this.getDoc<Usuarios>(path, this.idUsu).subscribe(resUsuario => {
+        this.rolUsu = resUsuario?.roles;
+        if (this.rolUsu === 'directivo') {
+          this.tabsDirectivo = true;
+        }
+        if (this.rolUsu === 'secretarioRector') {
+          this.tabsRector = true;
+        }
+        if (this.rolUsu === 'presidente') {
+          this.tabsPresidente = true;
+        }
+        if(this.rolUsu ==='admin'){
+          this.tabsAdmin = true;
+        }
+      });
+    });
+
+  }
+
+  getDoc<Usuarios>(path: string, id: any) {
+    return this.afs.collection(path).doc<Usuarios>(id).valueChanges()
   }
 
 }

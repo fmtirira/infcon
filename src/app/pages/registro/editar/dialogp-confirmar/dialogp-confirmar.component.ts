@@ -21,7 +21,7 @@ export class DialogpConfirmarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  DeleteUsuario(){
+  EliminarUsuario(){
     this.adminService.DeleteUsuario(this.adminService.usuarioSelectedBorrar);
     this.toastr.success('Registro eliminado','');
     this.dialogRef.close();

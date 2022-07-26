@@ -1,69 +1,162 @@
-.oracion{
-    text-transform: capitalize;
+.oracion {
+  text-transform: capitalize;
 }
-table {  
-    width: 100%;
-  }
-  .table-content {
-    padding-left: 3%;
-    padding-right: 2%;
-  }
-  .table-container { 
-    width: 98%;
-  }
-  
-  .mat-elevation-z8 {
-    /*padding: 10px 20px;*/
-    align-items: center;
-  }
-  
-  .table-container {
-    width: 98%;
-  }
-  .mat-header-cell {
-    text-align: center;
-    align-items: center;
-  }
-  
-  .mat-cell {
-    text-align: center;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto
-  }
-  .mat-column-numero {
-    word-wrap: break-word !important;
-    white-space: unset !important;
-    flex: 0 0 3% !important;
-    width: 4% !important;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto
-  }
-  
-  .mat-column-accion {
-    word-wrap: break-word !important;
-    white-space: unset !important;
-    flex: 0 0 11% !important;
-    width: 11% !important;
-    overflow-wrap: break-word;
-    word-wrap: break-word;
-    word-break: break-word;
-    -ms-hyphens: auto;
-    -moz-hyphens: auto;
-    -webkit-hyphens: auto;
-    hyphens: auto
-  }
-  .mat-dialog-container {
-    width: 50% !important;
-    height: 85% !important;
-    top: 5% !important;
-  }
+
+table {
+  width: 100%;
+}  
+ 
+.table-content {
+  padding-left: 3%;
+  padding-right: 2%;
+}
+
+.mat-elevation-z8 {
+  align-items: center;
+}
+
+.table-container {
+  width: 100%;
+}
+
+.mat-header-cell {
+  text-align: center;
+  align-items: center;
+}
+
+.mat-cell {
+  text-align: center;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto
+}
+
+.mat-column-numero {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 3% !important;
+  width: 6% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto
+}
+
+.mat-column-accion {
+  word-wrap: break-word !important;
+  white-space: unset !important;
+  flex: 0 0 11% !important;
+  width: 11% !important;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto
+}
+
+.mat-dialog-container {
+  width: 50% !important;
+  height: 85% !important;
+  top: 5% !important;
+}
+
+.div-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.div-button {
+  padding: 1% 0% 1% 0%;
+  width: 50%;
+  margin-left: 1%;
+}
+
+button {
+  color: #666668;
+}
+
+button:hover {
+  background-color: rgba(219, 215, 215, 0.904);
+}
+
+.card-list {
+  width: 100%;
+  text-align: center;
+  padding: 0% 40% 0% 40%;
+}
+
+.div-buscar {
+  padding: 0% 0% 0% 0%;
+  width: 50%;
+}
+
+.form-field {
+  width: 60%;
+  margin-left: 35%;
+}
+
+.card-arti {
+  background-color: #FFF;
+  box-shadow: 0 0 0 1px rgba(#000, .05), 0 20px 50px 0 rgba(#000, .1);
+  border-radius: 15px;
+  overflow: hidden;
+  padding: 1.25rem;
+  position: center;
+  transition: .15s ease-in;
+
+}
+
+.card-arti:hover {
+  box-shadow: 0 0 0 2px #16C79A, 0 10px 60px 0 rgba(#000, .1);
+  transform: translatey(-5px);
+  border-bottom-style: groove;
+  border-color: rgba(30, 85, 235, 0.897);
+  color: rgba(7, 21, 61, 0.897);
+}
+
+.card-image {
+  overflow: hidden;
+  text-align: center;
+  align-content: center;
+
+}
+
+.card-header {
+  margin-top: 1.5rem;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+i {
+  position: center;
+}
+
+a {
+  font-weight: 600;
+  font-size: 1rem;
+  padding-right: 1rem;
+  text-decoration: none;
+  color: inherit;
+  will-change: transform;
+
+}
+
+a:after {
+  content: "";
+  position: center;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+}

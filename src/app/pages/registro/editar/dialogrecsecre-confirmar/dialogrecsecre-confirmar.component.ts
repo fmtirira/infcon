@@ -22,13 +22,13 @@ export class DialogrecsecreConfirmarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  DeleteUsuario(){
+  DeleteUsuario(){ 
     this.adminService.DeleteUsuario(this.adminService.usuarioSelectedBorrar);
     this.toastr.success('Registro eliminado','');
     this.dialogRef.close();
     return true;
   }
-
+ 
   Close(): void{
     this.dialogRef.close();
   }

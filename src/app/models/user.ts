@@ -15,7 +15,9 @@ export interface Usuarios {
     emailVerified?: boolean;
     nomInstitucion?:string;
     idInstitucion?:any;
-    /*roles:Roles;*/
+    telefono?:any;
+    prefijo?:any;
+    foto?:any;
     roles?: 'admin' | 'directivo' | 'presidente' | 'secretarioRector',
 }
 

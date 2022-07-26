@@ -1,1 +1,74 @@
-<p>usuario-perfil works!</p>
+<app-tabs *ngIf="tabsAdmin"></app-tabs>
+<app-tabpresi *ngIf="tabsPresidente"></app-tabpresi>
+<app-tabs-directivo *ngIf="tabsDirectivo"></app-tabs-directivo>
+<app-tabsrec *ngIf="tabsRector"></app-tabsrec>
+<mat-grid-list cols=4 rowHeight="10px">
+    <mat-grid-tile colspan=3 rowspan="35">
+        <mat-card class="card-datos">
+            <h3>Datos Personales</h3>
+            <div class="div-datos">
+                <mat-form-field class="width-abre">
+                    <input readonly matInput placeholder="Abreviatura" value="{{datosUsuario.prefijo}}" >
+                </mat-form-field>
+                <mat-form-field class="input-width" style="margin-left: 29%;">
+                    <input readonly matInput placeholder="Cédula" value="{{datosUsuario.cedula}}">
+                </mat-form-field>
+                <br>
+                <mat-form-field class="input-width">
+                    <input readonly matInput placeholder="Nombres" value="{{datosUsuario.nombres}}">
+                </mat-form-field>
+                <mat-form-field class="input-width">
+                    <input readonly matInput placeholder="Apellidos" value="{{datosUsuario.apellidos}}">
+                </mat-form-field>
+                <mat-form-field class="input-width">
+                    <input readonly matInput placeholder="Correo electrónico" value="{{datosUsuario.email}}" class="input-email">
+                </mat-form-field>
+                <mat-form-field class="input-width">
+                    <input readonly matInput placeholder="Número de teléfono" value="{{datosUsuario.telefono}}">
+                </mat-form-field>
+                <mat-card-actions>
+                    <button mat-raised-button color="primary" (click)="Editar(datosUsuario)">Editar Información</button>
+                </mat-card-actions>
+            </div>
+        </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile colspan=1 rowspan="35">
+        <img src="{{datosUsuario.foto}}" class="img-profile">
+    </mat-grid-tile>
+    <mat-grid-tile colspan="2" rowspan="20">
+        <mat-card class="card-pass">
+            <form [formGroup]="passwordForm">
+                <div class="div-clave">
+                    <h3 style="text-align: center;">Cambiar Contraseña</h3>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Contraseña Actual" [type]="hidePass ? 'text' : 'password'"
+                            name="passActual" id="passActual" name="passActual" formControlName="passActual">
+                        <button mat-icon-button matSuffix (click)="hidePass = !hidePass"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePass" type="button">
+                            <mat-icon>{{hidePass ? 'visibility' : 'visibility_off'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="passwordForm.invalid">{{msgValidatePass()}}</mat-error>
+                    </mat-form-field>
+                    <br>
+                    <mat-form-field class="full-width">
+                        <input matInput placeholder="Nueva Contraseña" [type]="hidePassN ? 'text' : 'password'"
+                            name="passNueva" formControlName="passNueva" minlength="8">
+                        <mat-hint align="start"><strong>*mínimo 8 caracteres y una letra mayúscula</strong> </mat-hint>
+                        <button mat-icon-button matSuffix (click)="hidePassN = !hidePassN"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hidePassN" type="button">
+                            <mat-icon>{{hidePassN ? 'visibility' : 'visibility_off'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="passwordForm.invalid">{{msgValidateNewPass()}}</mat-error>
+                    </mat-form-field>
+                    <mat-card-actions>
+                        <button mat-raised-button class="btnGuardar" type="button" color="primary"
+                            (click)="CambiarClave()" [disabled]="this.passwordForm.invalid">Cambiar
+                            Contraseña</button>
+                    </mat-card-actions>
+                </div>
+            </form>
+        </mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile colspan="1" rowspan="22">
+    </mat-grid-tile>
+</mat-grid-list>

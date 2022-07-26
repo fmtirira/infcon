@@ -1,0 +1,39 @@
+  <div class="form-container">
+    <span><h3>Editar Perfil</h3></span>
+    <form [formGroup]="editarInfoForm" (ngSubmit)="OnSaveUsuario(editarInfoForm.value)">
+      <div class="avatar-upload">
+        <div class="avatar-edit">
+          <input type='file' id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput (change)="SubirArchivo($event)" />
+        </div>
+        <div class="avatar-preview">
+          <div id="imagePreview" [style.backgroundImage]="'url('+ photoUrl +')'">
+          </div>
+        </div>
+      </div>
+      <button mat-raised-button class="btn-image" type="button" (click)="fileInput.click()">Subir
+        Imagen</button>
+      <br>
+      <br>
+      <mat-form-field class="inputWidth">
+        <input matInput placeholder="Abreviatura" formControlName="prefijo">
+        <mat-hint align="start"><strong>*Sra Sr Mg Ing etc...</strong> </mat-hint>
+      </mat-form-field>
+      <mat-form-field class="inputWidth">
+        <input matInput placeholder="Nombres" formControlName="nombres" required>
+        <mat-error *ngIf="editarInfoForm.invalid">{{msgValidateNombres()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="inputWidth">
+        <input matInput placeholder="Apellidos" formControlName="apellidos" required>
+        <mat-error *ngIf="editarInfoForm.invalid">{{msgValidateApellidos()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="inputWidth">
+        <input matInput placeholder="Número de teléfono" formControlName="telefono" maxlength="10" minlength="7">
+      </mat-form-field>
+      <div mat-dialog-actions>
+        <button mat-raised-button color="primary" [disabled]="this.editarInfoForm.invalid"
+          type="submit">Guardar</button> &nbsp;
+        <button mat-raised-button color="warn" type="button" mat-dialog-close="" >Cancelar</button>
+      </div>
+    </form>
+  </div>
+  

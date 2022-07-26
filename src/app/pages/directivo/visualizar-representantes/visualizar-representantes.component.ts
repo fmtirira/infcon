@@ -3,7 +3,9 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { DialogosService } from 'src/app/services/dialogos.service';
+import { Router } from '@angular/router';
+import { Usuarios } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProvinciaService } from 'src/app/services/provincia.service';
 import { RepresentantesService } from 'src/app/services/representantes.service';
 
@@ -14,6 +16,7 @@ import { RepresentantesService } from 'src/app/services/representantes.service';
   providers: [ProvinciaService]
 })
 export class VisualizarRepresentantesComponent implements OnInit {
+  activar = false;
   displayedColumns: string[] = ['numero', 'prefijo', 'nombres', 'apellidos', 'cargo', 'email', 'telefono', 'celular', 'nomInstitucion'];
   dataSource = new MatTableDataSource();
   representantes: any[] = [];
@@ -21,11 +24,26 @@ export class VisualizarRepresentantesComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
+    private authService:AuthService,
+    private router: Router,
     private afs: AngularFirestore,
     public representanteService: RepresentantesService,
-    public dialogoService: DialogosService,
   ) {
-
+    this.authService.StateUser().subscribe(idA => {
+      if (idA) {
+        this.authService.GetDoc<Usuarios>('Usuarios', idA.uid).subscribe(rolesV => {
+          if (rolesV) {
+            if (rolesV.roles === 'directivo') {
+              this.activar = true;
+            }
+            else {
+              this.activar = false;
+              this.router.navigate(['/inicio']);
+            }
+          }
+        })
+      }
+    });
   }
 
   ngOnInit() {

@@ -1,12 +1,5 @@
-<app-tabsrec></app-tabsrec>
-<!-- <section *ngFor="let item of dataNivel">
-    <li>Id {{item.id}}</li>
-    <li> nombre: {{item.nomNivelEducacion}}</li>
-    {{item.hombres}}
-    {{item.mujeres}}
-
-</section> -->
-<div style="display: flex; flex-direction:row; text-align: center;">
+<app-tabsrec *ngIf="activar"></app-tabsrec>
+<div style="display: flex; flex-direction:row; text-align: center;" *ngIf="activar">
     <div class="card-list">
         <article class="card-arti">
             <div class="card-image">
@@ -15,11 +8,6 @@
             <div class="card-header">
                 <a style="padding: 0px 35%;"> {{sumaTotal}} Estudiantes</a>
             </div>
-            <!-- <div class="card-footer">
-            <div class="card-meta card-meta--date">
-                {{infoInsti.nomInstitucion |uppercase}}
-            </div>
-        </div> -->
         </article>
     </div>
     <div class="card-list">
@@ -30,11 +18,6 @@
             <div class="card-header">
                 <a style="padding: 0px 35%;"> {{sumaHombres}} Hombres</a>
             </div>
-            <!-- <div class="card-footer">
-            <div class="card-meta card-meta--date">
-                {{infoInsti.nomInstitucion |uppercase}}
-            </div>
-        </div> -->
         </article>
     </div>
     <div class="card-list">
@@ -45,18 +28,13 @@
             <div class="card-header">
                 <a style="padding: 0px 35%;"> {{sumaMujeres}} Mujeres </a>
             </div>
-            <!-- <div class="card-footer">
-            <div class="card-meta card-meta--date">
-                {{infoInsti.nomInstitucion |uppercase}}
-            </div>
-        </div> -->
         </article>
     </div>
 </div>
 <br>
-<div class="table-content table-container">
+<div class="table-content table-container" *ngIf="activar">
     <Form [formGroup]="nivelesForm">
-        <p-table [value]="dataNivel" dataKey="id" editMode="row" responsiveLayout="scroll">
+        <p-table [value]="dataEstudiantes" dataKey="uid" editMode="row" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
                     <th hidden>Id</th>
@@ -72,10 +50,10 @@
                     <td hidden>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="nivel.id" readonly formControlName="id">
+                                <input pInputText type="text" [(ngModel)]="nivel.uid" readonly formControlName="uid">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{nivel.id}}
+                                {{nivel.uid}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -136,5 +114,6 @@
                 </tr>
             </ng-template>
         </p-table>
+        <br>
     </Form>
 </div>

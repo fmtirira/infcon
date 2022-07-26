@@ -5,12 +5,21 @@
     width: 40%;
 }
 .full-nombres{
-    width: 45%;
-    margin-left: 2%;
+    width: 40%;
+    margin-left: 5%;
 }
 .oracion{
     text-transform: capitalize;
 }
 .mayusculas{
   text-transform: uppercase;
+}
+h1{
+  font-weight: bold;
+}
+.width-prefijo{
+ width: 25%;
+}
+mat-error{
+  font-size: 10px;
 }

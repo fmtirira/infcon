@@ -1,18 +1,18 @@
 <div _ngcontent-cib-c1 class="login-div" style="text-align: center">
     <h1> Editar Representante</h1>
 
-    <form [formGroup]="editarRepresentanteForm" (ngSubmit)="OnSaveInsti(editarRepresentanteForm.value)">        
+    <form [formGroup]="editarRepresentanteForm" (ngSubmit)="OnSaveInsti(editarRepresentanteForm.value)">
         <input type="hidden" formControlName="uid">
         <input type="hidden" formControlName="idInstitucion">
-        <input  type="hidden" formControlName="nomInstitucion">
-        <mat-form-field class="full-width" appearance="outline">
+        <input type="hidden" formControlName="nomInstitucion">
+        <mat-form-field class="full-width">
             <mat-label>Prefijo</mat-label>
             <input matInput type="text" placeholder="Ingrese Prefijo" formControlName="prefijo">
             <mat-hint align="start"><strong>*Sra Sr Mg Ing etc...</strong> </mat-hint>
             <mat-error *ngIf="editarRepresentanteForm.invalid" style="font-size: 10px ;">{{msgValidatePrefijo()}}
             </mat-error>
         </mat-form-field>
-       
+
         <mat-form-field class="full-nombres" appearance="outline">
             <mat-label>Nombres</mat-label>
             <input matInput type="text" placeholder="Ingrese Nombres del Representante" formControlName="nombres">
@@ -27,7 +27,8 @@
         </mat-form-field>
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Correo Electrónico</mat-label>
-            <input matInput type="text" placeholder="Ingrese correo electrónico del Representante" formControlName="email">
+            <input matInput type="text" placeholder="Ingrese correo electrónico del Representante"
+                formControlName="email">
             <mat-error *ngIf="editarRepresentanteForm.invalid" style="font-size: 10px ;">{{msgValidateEmail()}}
             </mat-error>
         </mat-form-field>
@@ -55,7 +56,8 @@
         </mat-form-field>
 
         <button mat-raised-button type="submit" class="btnIngresar" color="primary"
-            [disabled]="editarRepresentanteForm.invalid" (ngSubmit)="OnSaveInsti(editarRepresentanteForm.value)">Guardar</button>
+            [disabled]="editarRepresentanteForm.invalid"
+            (ngSubmit)="OnSaveInsti(editarRepresentanteForm.value)">Guardar</button>
         <button mat-raised-button color="warn" style="margin-left: 20px;" mat-dialog-close="">Cancelar</button>
     </form>
 </div>

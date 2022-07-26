@@ -1,0 +1,101 @@
+<app-tabpresi *ngIf="activar"></app-tabpresi>
+<div class="card-list" *ngIf="activar">
+    <article class="card-arti">
+        <div class="card-image">
+            <i class="fa-solid fa-school fa-3x"></i>
+        </div>
+        <div class="card-header">
+            <a> {{totalInstituciones}} Instituciones</a>
+        </div>
+    </article>
+</div>
+<br>
+<div class="table-content" *ngIf="activar">
+    <div class="table-container mat-elevation-z8">
+        <div class="div-header">
+            <div class="div-button">
+                <button mat-raised-button icon="pi pi-file-excel"
+                    (click)="exporter.exportTable('xlsx', {fileName:'instituciones', sheet: 'lista_instituciones', Props: {Author: 'CONFEDEC'}})">
+                    <i class="fa-solid fa-file-excel fa-lg"></i>
+                    &nbsp;&nbsp; Exportar</button>
+            </div>
+            <div class="div-buscar">
+                <mat-form-field class="form-field">
+                    <mat-icon matSuffix aria-hidden="false" aria-label="Example email icon">search</mat-icon>
+                    <input matInput placeholder="Búsqueda" (keyup)="applyFilter($event)">
+                </mat-form-field>
+            </div>
+        </div>
+        <table mat-table matTableExporter [dataSource]="dataSource" #exporter="matTableExporter"
+            class="mat-elevation-z8">
+            <ng-container matColumnDef="numero">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">No.</th>
+                <td mat-cell *matCellDef="let element; index as i">
+                    {{i+1}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="codigoAMIE">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">Código AMIE
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.codigoAMIE |uppercase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="nomInstitucion">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">Nombre de
+                    Institución</th>
+                <td mat-cell *matCellDef="let element" style="width: 20%;">
+                    {{element.nomInstitucion | titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="nomProvincia">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">Provincia</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.nomProvincia}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="direccionInstitucion">
+                <th mat-header-cell *matHeaderCellDef class="celda-th" style="width: 20%;">Dirección
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.direccionInstitucion | titlecase}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="zonaInec">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">Zona INEC</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.zonaInec}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="modalidad">
+                <th mat-header-cell *matHeaderCellDef class="celda-th" style="width: 8%;">Modalidad
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.modalidad}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="jornada">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">Jornada</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.jornada}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="jurisdiccion">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">Jurisdicción</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.jurisdiccion}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="sostenimiento">
+                <th mat-header-cell *matHeaderCellDef class="celda-th">Sostenimiento</th>
+                <td mat-cell *matCellDef="let element">
+                    {{element.sostenimiento}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+        </mat-paginator>
+    </div>
+</div>

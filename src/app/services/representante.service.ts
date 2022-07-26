@@ -54,16 +54,7 @@ export class RepresentanteService {
   GetRepresentante(id: string) {
     return this.afs.collection('Representantes').doc(id).snapshotChanges();
   }
-  /* GetAllRepresentantes(){
-    return this.Representante = this.RepreCollection.snapshotChanges()
-    .pipe(map(changes =>{
-      return changes.map(action =>{
-        const data = action.payload.doc.data() as RepresentantesI;
-        data.uid = action.payload.doc.id;
-        return data;
-      });
-    }));
-  } */
+
   UpdateRepresentante(id: string, data: any) {
     return this.afs.collection('Representantes').doc(id).update(data);
   }

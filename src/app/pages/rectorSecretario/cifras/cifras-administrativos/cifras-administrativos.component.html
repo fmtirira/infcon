@@ -1,8 +1,8 @@
-<app-tabsrec></app-tabsrec>
+<app-tabsrec *ngIf="activar"></app-tabsrec>
 <br>
 <br>
 <br>
-<div class="table-content table-container">
+<div class="table-content table-container" *ngIf="activar">
     <Form [formGroup]="administrativoForm">
         <p-table [value]="dataNivel" dataKey="idAdmin" editMode="row" responsiveLayout="scroll">
             <ng-template pTemplate="header">

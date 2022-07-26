@@ -7,12 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './pages/login/login.component';
 
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
-import {AngularFireStorageModule} from '@angular/fire/compat/storage';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 
@@ -20,27 +20,23 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password.component';
 import { AuthService } from './services/auth.service';
 import { HeaderComponent } from './pages/header/header/header.component';
-import { RegistroDComponent } from './pages/registro/registroD.component';
+import { ListarDirectivoComponent } from './pages/registro/listar-directivo.component';
 
-import { TabsComponent } from './pages/header/menu/admin/tabs/tabs.component';
-import { RegistropComponent } from './pages/registro/registrop/registrop.component';
+import { TabsComponent } from './pages/header/menu/tabs/tabs.component';
+import { ListarPresidenteComponent } from './pages/registro/listar-presidente/listar-presidente.component';
 
-import { RegistroinstitucionComponent } from './pages/registro/registroinstitucion/registroinstitucion.component';
-import { RegistrorectorsecreComponent } from './pages/registro/registrorectorsecre/registrorectorsecre.component';
-import { DialogdComponent } from './pages/registro/dialogd/dialogd.component';
-import { DialogpComponent } from './pages/registro/dialogp/dialogp.component';
-import { DialogiComponent } from './pages/registro/dialogi/dialogi.component';
-import { DialogrecsecreComponent } from './pages/registro/dialogrecsecre/dialogrecsecre.component';
-import { DialogdeditarComponent } from './pages/registro/editar/dialogdeditar/dialogdeditar.component';
-import { DialogrecseceditarComponent } from './pages/registro/editar/dialogrecseceditar/dialogrecseceditar.component';
-import { FilterPipe } from './pages/pipes/filter.pipe';
-import { DialogpeditarComponent } from './pages/registro/editar/dialogpeditar/dialogpeditar.component';
+import { ListarRectorsecreComponent } from './pages/registro/listar-rectorsecre/listar-rectorsecre.component';
+import { CrearDirectivoComponent} from './pages/registro/crear-directivo/crear-directivo.component';
+import { CrearPresidenteComponent } from './pages/registro/crear-presidente/crear-presidente.component';
+import { CrearInstitucionComponent } from './pages/registro/crear-institucion/crear-institucion.component';
+import { CrearRectorsecreComponent } from './pages/registro/crear-rectorsecre/crear-rectorsecre.component';
+import { EditarDirectivoComponent } from './pages/registro/editar/editar-directivo/editar-directivo.component';
+import { EditarRectorsecreComponent } from './pages/registro/editar/editar-rectorsecre/editar-rectorsecre.component';
+import { EditarPresidenteComponent } from './pages/registro/editar/editar-presidente/editar-presidente.component';
 
-import{ToastrModule} from 'ngx-toastr';
-import {AccordionModule} from 'primeng/accordion';
+import { ToastrModule } from 'ngx-toastr';
+import { AccordionModule } from 'primeng/accordion';
 //import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-
-import { UsuarioComponent } from './pages/usuario/usuario/usuario.component';
 import { UsuarioPerfilComponent } from './pages/usuario/usuario-perfil/usuario-perfil.component';
 import { EditarPerfilComponent } from './pages/usuario/editar-perfil/editar-perfil.component';
 import { InicioComponent } from './pages/rectorSecretario/inicio/inicio/inicio.component';
@@ -56,25 +52,29 @@ import { VisualizarRepresentantesComponent } from './pages/directivo/visualizar-
 import { VisualizarcifraEstudiantesComponent } from './pages/directivo/visualizarcifra-estudiantes/visualizarcifra-estudiantes.component';
 import { VisualizarcifraDocentesComponent } from './pages/directivo/visualizarcifra-docentes/visualizarcifra-docentes.component';
 import { VisualizarcifraAdministrativosComponent } from './pages/directivo/visualizarcifra-administrativos/visualizarcifra-administrativos.component';
-import { MatConfirmDialogComponent } from './pages/header/mat-confirm-dialog/mat-confirm-dialog.component';
-import { DialogieditarComponent } from './pages/registro/editar/dialogieditar/dialogieditar.component';
 import { DialogiConfirmarComponent } from './pages/registro/editar/dialogi-confirmar/dialogi-confirmar.component';
 import { DialogpConfirmarComponent } from './pages/registro/editar/dialogp-confirmar/dialogp-confirmar.component';
 import { DialogrecsecreConfirmarComponent } from './pages/registro/editar/dialogrecsecre-confirmar/dialogrecsecre-confirmar.component';
 import { DialogdConfirmarComponent } from './pages/registro/editar/dialogd-confirmar/dialogd-confirmar.component';
-import { DialognivelComponent } from './pages/rectorSecretario/dialognivel/dialognivel.component';
-import { MatMenuItem } from '@angular/material/menu';
 
-import {ButtonModule} from 'primeng/button';
+import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
+import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
-import { CifrasdocentesEditarComponent } from './pages/rectorSecretario/cifras/cifrasdocentes-editar/cifrasdocentes-editar.component';
 import { CrearRepresentanteComponent } from './pages/rectorSecretario/representantes/crear-representante/crear-representante.component';
 import { DialogrepConfirmarComponent } from './pages/rectorSecretario/representantes/dialogrep-confirmar/dialogrep-confirmar.component';
-import { TabsDirectivoComponent } from './pages/header/menu/director/tabs-directivo/tabs-directivo.component';
+import { TabsDirectivoComponent } from './pages/header/menu/tabs-directivo/tabs-directivo.component';
 import { VisualizarPresidentesComponent } from './pages/directivo/visualizar-presidentes/visualizar-presidentes.component';
-
-
+import { VisualizarListaInstitucionesComponent } from './pages/presidente/visualizar-lista-instituciones/visualizar-lista-instituciones.component';
+import { VisualizarListaEstudiantesComponent } from './pages/presidente/visualizar-lista-estudiantes/visualizar-lista-estudiantes.component';
+import { VisualizarListaDocentesComponent } from './pages/presidente/visualizar-lista-docentes/visualizar-lista-docentes.component';
+import { VisualizarListaAdministrativosComponent } from './pages/presidente/visualizar-lista-administrativos/visualizar-lista-administrativos.component';
+import { TabpresiComponent } from './pages/header/menu/tabpresi/tabpresi.component';
+import { VisualizarListaRepresentantesComponent } from './pages/presidente/visualizar-lista-representantes/visualizar-lista-representantes.component';
+import { ExporterService } from './services/exporter.service';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { ListarInstitucionComponent } from './pages/registro/listar-institucion/listar-institucion.component';
+import { EditardInstitucionComponent } from './pages/registro/editar/editard-institucion/editard-institucion.component';
 
 @NgModule({
   declarations: [
@@ -82,27 +82,25 @@ import { VisualizarPresidentesComponent } from './pages/directivo/visualizar-pre
     LoginComponent,
     ForgotPasswordComponent,
     HeaderComponent,
-    RegistroDComponent,
+    ListarDirectivoComponent,
     TabsComponent,
-    RegistropComponent,
-    RegistroinstitucionComponent,
-    RegistrorectorsecreComponent,
-    DialogdComponent,
-    DialogpComponent,
-    DialogiComponent,
-    DialogrecsecreComponent,
-    DialogdeditarComponent,
-    DialogrecseceditarComponent,
-    FilterPipe,
-    DialogpeditarComponent,
-    UsuarioComponent,
+    ListarPresidenteComponent,
+    ListarRectorsecreComponent,
+    CrearDirectivoComponent,
+    CrearPresidenteComponent,
+    CrearInstitucionComponent,
+    CrearRectorsecreComponent,
+    EditarDirectivoComponent,
+    EditarRectorsecreComponent,
+    EditarPresidenteComponent,
     UsuarioPerfilComponent,
     EditarPerfilComponent,
     InicioComponent,
     TabsrecComponent,
     EditarInstitucionComponent,
+    EditardInstitucionComponent,
     EditarRepresentanteComponent,
-    RegistroinstitucionComponent,
+    ListarInstitucionComponent,
     ListarRepresentantesComponent,
     CifrasAdministrativosComponent,
     CifrasDocentesComponent,
@@ -112,18 +110,20 @@ import { VisualizarPresidentesComponent } from './pages/directivo/visualizar-pre
     VisualizarcifraEstudiantesComponent,
     VisualizarcifraDocentesComponent,
     VisualizarcifraAdministrativosComponent,
-    MatConfirmDialogComponent,
-    DialogieditarComponent,
     DialogiConfirmarComponent,
     DialogpConfirmarComponent,
     DialogrecsecreConfirmarComponent,
     DialogdConfirmarComponent,
-    DialognivelComponent,
-    CifrasdocentesEditarComponent,
     CrearRepresentanteComponent,
     DialogrepConfirmarComponent,
     TabsDirectivoComponent,
-    VisualizarPresidentesComponent   
+    VisualizarPresidentesComponent,
+    VisualizarListaInstitucionesComponent,
+    VisualizarListaEstudiantesComponent,
+    VisualizarListaDocentesComponent,
+    VisualizarListaAdministrativosComponent,
+    TabpresiComponent,
+    VisualizarListaRepresentantesComponent,
   ],
   imports: [
     FlexLayoutModule,
@@ -144,10 +144,11 @@ import { VisualizarPresidentesComponent } from './pages/directivo/visualizar-pre
     ButtonModule,
     TableModule,
     InputTextModule,
-
+    DividerModule,
+    MatTableExporterModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, ExporterService],
   bootstrap: [AppComponent],
-  schemas:[CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

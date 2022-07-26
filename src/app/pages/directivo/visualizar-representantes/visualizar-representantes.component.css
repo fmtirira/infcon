@@ -5,7 +5,7 @@
 table {
     width: 100%;
 }
-
+ 
 .table-content {
     padding-left: 3%;
     padding-right: 2%;
@@ -16,16 +16,12 @@ table {
 }
 
 .mat-elevation-z8 {
-    /*padding: 10px 20px;*/
     align-items: center;
-}
-
-.table-container {
-    width: 100%;
 }
 
 .mat-header-cell {
     text-align: center;
+    align-items: center;
 }
 
 .mat-cell {
@@ -43,7 +39,7 @@ table {
     word-wrap: break-word !important;
     white-space: unset !important;
     flex: 0 0 3% !important;
-    width: 4% !important;
+    width: 6% !important;
     overflow-wrap: break-word;
     word-wrap: break-word;
     word-break: break-word;
@@ -71,4 +67,37 @@ table {
     width: 50% !important;
     height: 85% !important;
     top: 5% !important;
+}
+
+.div-representante {
+    width: 80%;
+    margin-left: 20%;
+}
+.div-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+.div-button {
+    padding: 1% 0% 1% 0%;
+    width: 50%;
+    margin-left: 1%;
+}
+
+button {
+    color: #666668;
+}
+
+button:hover {
+    background-color: rgba(219, 215, 215, 0.904);
+}
+
+.div-buscar {
+    padding: 0% 0% 0% 0%;
+    width: 50%;
+}
+
+.form-field {
+    width: 60%;
+    margin-left: 35%;
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Usuarios } from 'src/app/models/user';
 import { AuthService } from '../../services/auth.service';
 
@@ -10,34 +11,32 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   hide = true;//para la clave
+  login= false;
 
-  constructor(public authService:AuthService) { }
+  constructor(public authService:AuthService,private router: Router) {
+    this.authService.StateUser().subscribe(res =>{
+      if(res){        
+        this.login = true;
+        this.router.navigate(['/inicio']);
+      }else{
+        //console.log('no esta logeado');
+        this.login = false;
+      }
+    })
+   }
 
   ngOnInit(): void {
   }
   //se guardara los datos aqui
   usuario ={
-    email:'',
+    email:'', 
     clave:''
   }
 
-  /*async Login(){
-    try{
-      console.log('Credenciales ->', this.usuario);
-      const res = await this.authService.Login(this.usuario.email, this.usuario.clave)
-      if(res){
-        console.log('res ->',res);        
-      }
-      
-    }catch(e:any){
-      //alert(e.message);      
-    }
-  }*/
 
   btnIngresar(){
     try{
-      //recupera el correo y clave del input gracias al ngmodel
-     
+      
     }catch(e:any){
       alert(e.message);
     }

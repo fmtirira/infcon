@@ -72,3 +72,9 @@ table {
     height: 85% !important;
     top: 5% !important;
 }
+
+.celda-th {
+    font-weight: bold;
+    font-size: small;
+    text-align: center;
+}

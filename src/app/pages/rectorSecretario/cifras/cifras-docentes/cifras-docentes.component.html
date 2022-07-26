@@ -1,5 +1,5 @@
-<app-tabsrec></app-tabsrec>
-<div style="display: flex; flex-direction:row; text-align: center;">
+<app-tabsrec *ngIf="activar"></app-tabsrec>
+<div style="display: flex; flex-direction:row; text-align: center;" *ngIf="activar">
     <div class="card-list">
         <article class="card-arti">
             <div class="card-image">
@@ -8,11 +8,6 @@
             <div class="card-header">
                 <a style="padding: 0px 35%;"> {{sumaTotal}} Docentes</a>
             </div>
-            <!-- <div class="card-footer">
-            <div class="card-meta card-meta--date">
-                {{infoInsti.nomInstitucion |uppercase}}
-            </div>
-        </div> -->
         </article>
     </div>
     <div class="card-list">
@@ -47,9 +42,9 @@
     </div>
 </div>
 <br>
-<div class="table-content table-container">
+<div class="table-content table-container" *ngIf="activar">
     <Form [formGroup]="docentesForm">
-        <p-table [value]="dataDocente" dataKey="idNivel" editMode="row" responsiveLayout="scroll">
+        <p-table [value]="dataDocente" dataKey="uid" editMode="row" responsiveLayout="scroll">
             <ng-template pTemplate="header">
                 <tr>
                     <th hidden>Id</th>
@@ -65,10 +60,10 @@
                     <td hidden>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="text" [(ngModel)]="nivel.idNivel" readonly formControlName="idNivel">
+                                <input pInputText type="text" [(ngModel)]="nivel.uid" readonly formControlName="uid">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{nivel.idNivel}}
+                                {{nivel.uid}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -86,32 +81,32 @@
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="number" [(ngModel)]="nivel.docenHombres"
-                                    formControlName="docenHombres" min="1" pattern="^[0-9]+" max="999">
+                                <input pInputText type="number" [(ngModel)]="nivel.hombres"
+                                    formControlName="hombres" min="1" pattern="^[0-9]+" max="999">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{nivel.docenHombres}}
+                                {{nivel.hombres}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="number" id="mujeres" [(ngModel)]="nivel.docenMujeres"
-                                    formControlName="docenMujeres" min="1" pattern="^[0-9]+" max="999">
+                                <input pInputText type="number" id="mujeres" [(ngModel)]="nivel.mujeres"
+                                    formControlName="mujeres" min="1" pattern="^[0-9]+" max="999">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{nivel.docenMujeres}}
+                                {{nivel.mujeres}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
                     <td>
                         <p-cellEditor>
                             <ng-template pTemplate="input">
-                                <input pInputText type="number" readonly formControlName="docenTotal">
+                                <input pInputText type="number" readonly formControlName="total">
                             </ng-template>
                             <ng-template pTemplate="output">
-                                {{nivel.docenTotal}}
+                                {{nivel.total}}
                             </ng-template>
                         </p-cellEditor>
                     </td>
@@ -130,4 +125,5 @@
             </ng-template>
         </p-table>
     </Form>
+    <br>
 </div>

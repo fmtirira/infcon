@@ -10,6 +10,7 @@ import { Usuarios } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { InstitucionesService } from 'src/app/services/instituciones.service';
 import { RepresentanteService } from 'src/app/services/representante.service';
+import { RepresentantesService } from 'src/app/services/representantes.service';
 
 @Component({
   selector: 'app-crear-representante',
@@ -30,6 +31,7 @@ export class CrearRepresentanteComponent implements OnInit {
     uid: '',
     prefijo: '',
     nomInstitucion: '',
+    nomProvincia: '',
     nombres: '',
     apellidos: '',
     cargo: '',
@@ -54,11 +56,14 @@ export class CrearRepresentanteComponent implements OnInit {
     private dialogRef: MatDialogRef<CrearRepresentanteComponent>,
     private institucionService: InstitucionesService,
     private toastr: ToastrService,
-    private representanteService: RepresentanteService) {
+    private representanteService: RepresentanteService,
+    private representantesService: RepresentantesService,
+  ) {
     dialogRef.disableClose = true;
   }
 
   ngOnInit(): void {
+
   }
   msgValidatePrefijo() {
     return this.registroRepresentanteForm.get('prefijo')?.hasError('required') ? 'Campo obligatorio' :
@@ -86,33 +91,36 @@ export class CrearRepresentanteComponent implements OnInit {
         const idUsuario = await this.authService.GetUid();
         if (idUsuario) {
           this.idUsu = idUsuario;
-          console.log('idusuario', this.idUsu);
-          this.getDoc<Usuarios>('Usuarios', this.idUsu).subscribe(resUsuario => {
+          this.getDoc<Usuarios>('Usuarios', this.idUsu).subscribe(async resUsuario => {
             if (resUsuario) {
               this.infoUsu = resUsuario;
               this.datosRepresentante.idInstitucion = this.infoUsu.idInstitucion;
               this.datosRepresentante.nomInstitucion = this.infoUsu.nomInstitucion;
-              console.log('datos usu', this.datosRepresentante);
-              if (this.ExistEmail(this.datosRepresentante.email) === true) {
-                this.toastr.warning('El representante ya se encuentra registrado', 'DUPLICADOS');
-                this.registroRepresentanteForm.reset();
-              } else {
-                const path = 'Representantes';
-                const uid = this.authService.GetId();
-                this.datosRepresentante.uid = uid;
+              await this.getDoc<InstitucionesI>('Instituciones', this.infoUsu.idInstitucion).subscribe(async obtenerProvincia => {
+                if (obtenerProvincia) {
+                  this.infoInstitucion = obtenerProvincia;
+                  this.datosRepresentante.nomProvincia = this.infoInstitucion.nomProvincia;
+                  if (this.ExistEmail(this.datosRepresentante.email) === true) {
+                    this.toastr.warning('El representante ya se encuentra registrado', 'DUPLICADOS');
+                    this.registroRepresentanteForm.reset();
+                    this.dialogRef.close();
+                  } else {
+                    const path = 'Representantes';
+                    const uid = this.authService.GetId();
+                    this.datosRepresentante.uid = uid;
 
-                this.authService.CrearDoc(this.datosRepresentante, path, uid).then(() => {
-                  this.toastr.success("Guardado con éxito", '', {
-                    positionClass: 'toast-top-right'
-                  });
-                  this.dialogRef.close();
-                });
-              }
+                    await this.authService.CrearDoc(this.datosRepresentante, path, uid).then(() => {
+                      this.toastr.success("Guardado con éxito", '', {
+                        positionClass: 'toast-top-right'
+                      });
+                      this.dialogRef.close();
+                    });
+                  }
+                }
+              });
+
             }
-            // console.log('datos usu',this.datosRepresentante);
           });
-
-
         } else {
           console.log('no existe uid');
         }
@@ -124,6 +132,9 @@ export class CrearRepresentanteComponent implements OnInit {
         this.registroRepresentanteForm.reset();
       }
     } catch (error) {
+      this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
+        positionClass: 'toast-top-right'
+      });
       console.log('error ->', error);
     }
   }
@@ -131,19 +142,17 @@ export class CrearRepresentanteComponent implements OnInit {
   ExistEmail(email: any): boolean {
     var exist = false;
     if (email) {
-      const repreFiltrada = this.representanteService.arrayRepresentante
+      const repreFiltrada = this.representantesService.arrayRepresentante
         .find(repreFiltradabyemail => repreFiltradabyemail?.email === email);
-      console.log('imprime a repreFiltrada', repreFiltrada);
       if (repreFiltrada) {
         exist = true;
-        console.log(' existe ', exist);
+        console.log(' existe ');
 
       } else {
         console.log(' no existe');
         exist = false;
       }
     } else {
-      console.log('false fuera del filtro');
       exist = false;
     }
     return exist;

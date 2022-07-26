@@ -3,6 +3,7 @@ export interface InstitucionesI {
     idInstitucion?:any,
     //sale en el crud
     codigoAMIE?: string,
+    logo?: any,
     nomInstitucion?: string,    
     direccionInstitucion?:string,
     //matutina y vespertina
@@ -16,13 +17,8 @@ export interface InstitucionesI {
     nomProvincia?:string,
     //se puede elegir varias opciones basica bahillerato etc
     nivelEducacion?:any,
-    cifrasDocentes?:NivelDocentes[],
-    cifrasAdministrativos?:[{
-        idAdmin:'cifraAdmin',
-        adminHombres:any,
-        adminMujeres:any,
-    }],
-    niveles?:Nivel[],   
+    cifrasAdministrativos?:any,
+    niveles?:any,   
 }
 
 export interface NivelGroupI {
@@ -34,6 +30,7 @@ export interface NivelGroupI {
 export interface Nivel {
     id?: any;
     nomNivelEducacion?: any;
+    nomInstitucion?: any;
     hombres?: any;
     mujeres?: any;
     total?: any;    
@@ -44,10 +41,4 @@ export interface NivelDocentes {
     docenHombres?: any,
     docenMujeres?: any,
     docenTotal?: any,  
-}
-export interface CifrasAdministrativoI{
-    idAdmin: any;
-    adminTotal?: any;
-    adminMujeres?: any;
-    adminHombres?: any;
 }

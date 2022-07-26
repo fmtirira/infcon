@@ -9,4 +9,5 @@ export interface RepresentantesI {
     telefono?: string;
     celular?: string;
     nomInstitucion?:string;
+    nomProvincia?:string;
 }

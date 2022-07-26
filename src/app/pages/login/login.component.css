@@ -23,8 +23,8 @@
     width: 380px;
     height: 400px;
     background: rgba(255, 255, 255, 0.5);
-    border: rgb(52, 22, 159);
-    border-style: solid;
+    border: rgb(63 81 181);
+    border-style: groove;
     border-radius: 10px;
     text-align: center;
 }

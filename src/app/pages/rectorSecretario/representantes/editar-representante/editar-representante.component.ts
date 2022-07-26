@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { RepresentantesI } from 'src/app/models/representante.interface';
-import { DialogiComponent } from 'src/app/pages/registro/dialogi/dialogi.component';
+import { CrearInstitucionComponent } from 'src/app/pages/registro/crear-institucion/crear-institucion.component';
 import { RepresentantesService } from 'src/app/services/representantes.service';
 
 @Component({
@@ -30,7 +30,7 @@ export class EditarRepresentanteComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     public representantesService: RepresentantesService,
-    public dialogRef: MatDialogRef<DialogiComponent>) 
+    public dialogRef: MatDialogRef<CrearInstitucionComponent>) 
     {
       dialogRef.disableClose= true;
     }

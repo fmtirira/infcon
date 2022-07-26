@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { RegistroDComponent } from './pages/registro/registroD.component';
+
 @Component({
   selector: 'app-root',
   templateUrl:'./app.component.html' ,
@@ -8,12 +8,7 @@ import { RegistroDComponent } from './pages/registro/registroD.component';
 })
 export class AppComponent {
   title = 'infcon';
-  constructor(private dialog: MatDialog){
-
+  constructor(){
   }
-  OpenDialog(){
-    this.dialog.open(RegistroDComponent,{
-
-    });
-  }
+ 
 }

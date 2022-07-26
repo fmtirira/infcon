@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/compat/firestore';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { CifrasDocentesI } from 'src/app/models/cifrasDocentes.interface';
 import { InstitucionesI, NivelDocentes } from 'src/app/models/institucion.interface';
 import { Usuarios } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { CifraDocenteService } from 'src/app/services/cifra-docente.service';
+import { CifrasDocentesService } from 'src/app/services/cifras-docentes.service';
 import { InstitucionesService } from 'src/app/services/instituciones.service';
 
 @Component({
@@ -14,58 +18,62 @@ import { InstitucionesService } from 'src/app/services/instituciones.service';
   styleUrls: ['./cifras-docentes.component.css']
 })
 export class CifrasDocentesComponent implements OnInit {
+  activar = false;
   public InstitucionCollection!: AngularFirestoreCollection<InstitucionesI>;
   public InstitucionDocument!: AngularFirestoreDocument<InstitucionesI>;
   public InstitucionInfo!: Observable<any[]>;
-
+  private subscription: Subscription = new Subscription;
   uid: any = ''; //uid del Usuario
-  info!: Usuarios; //me permite traer la info a la vista
+  idInstitucion: string = '';
+  info!: Usuarios; // traer la info a la vista
   infoInstitucion: InstitucionesI[] = [];
   infoInsti!: InstitucionesI;
-  //data!: InstitucionesI;
-  infoNi!: any; //me permite guardar los object de los niveles
   mujeres = 0;
   hombres = 0;
   total!: number;
-  sumaTotal:any;
-  sumaMujeres:any;
+  sumaTotal: any;
+  sumaMujeres: any;
   sumaHombres: any;
   datosNivelesInsti: any[] = [];
 
-  dataDocente: NivelDocentes[] = [];
-
-  //me permitira poder actualizar la data de instituciones
-  clonedNivel: { [s: string]: NivelDocentes; } = {};
+  dataDocente: CifrasDocentesI[] = [];
+  cifrasDocentes!: any[];
+  //actualizar la data de instituciones
+  clonedNivel: { [s: string]: CifrasDocentesI; } = {};
   //form
-  docentesForm: FormGroup; 
+  docentesForm: FormGroup;
 
   constructor(
     public afs: AngularFirestore,
+    private router: Router,
     public authService: AuthService,
     public toastr: ToastrService,
     public instiService: InstitucionesService,
+    private cifrasDService: CifraDocenteService,
+    private cifrasDsService: CifrasDocentesService,
     private formBuilder: FormBuilder
-  ) { 
+  ) {
     this.docentesForm = this.formBuilder.group({
-      idNivel: (null),
+      uid: (null),
       nomNivelEducacion: ['', Validators.required],
-      docenHombres: ['', Validators.required],
-      docenMujeres: ['', Validators.required],
-      docenTotal: (null)
+      hombres: ['', Validators.required],
+      mujeres: ['', Validators.required],
+      total: (null)
+    });
+    this.authService.StateUser().subscribe(idA => {
+      if (idA) {
+        this.getUid();
+      }
     });
   }
 
-  ngOnInit(){
-    this.authService.StateUser().subscribe(res => {
+  ngOnInit() {
 
-      this.getUid();
-    });
   }
   async getUid() {
     const uid = await this.authService.GetUid();
     if (uid) {
       this.uid = uid;
-      console.log('uid ->', this.uid);
       this.getInfoUser();
     } else {
       console.log('no existe uid');
@@ -75,23 +83,40 @@ export class CifrasDocentesComponent implements OnInit {
   getInfoUser() {
     const path = 'Usuarios';
     const id = this.uid;
-    this.getDoc<Usuarios>(path, id).subscribe(res => {
+    this.authService.GetDoc<Usuarios>(path, id).subscribe(res => {
       if (res) {
+        if (res.roles === 'secretarioRector') {
+          this.activar = true;
+        }
+        else {
+          this.activar = false;
+          this.router.navigate(['/inicio']);
+        }
         this.info = res;
         const pathI = 'Instituciones';
         this.InstitucionCollection = this.afs.collection(pathI);
-        this.getDoc<InstitucionesI>(pathI, this.info.idInstitucion).subscribe(resInsti => {
+
+        this.authService.GetDoc<InstitucionesI>(pathI, this.info.idInstitucion).subscribe(resInsti => {
           if (resInsti) {
             this.infoInsti = resInsti;
-            this.infoNi = resInsti?.cifrasDocentes;
-            this.dataDocente = this.infoNi;
-            console.log(this.dataDocente);
-             this.sumaTotal= this.dataDocente.map(items => items.docenTotal).reduce((prev, curr) => prev+curr,0);
-            console.log('Total suma ',this.sumaTotal); 
-            this.sumaMujeres= this.dataDocente.map(items => items.docenMujeres).reduce((prev, curr) => prev+curr,0);
-            console.log('Total suma ',this.sumaMujeres); 
-            this.sumaHombres= this.dataDocente.map(items => items.docenHombres).reduce((prev, curr) => prev+curr,0);
-            console.log('Total suma ',this.sumaHombres); 
+            this.idInstitucion = resInsti?.idInstitucion;
+            this.subscription.add(
+              this.cifrasDService.GetAllCifrasDocentes(this.idInstitucion).subscribe(cifrasD => {
+                this.cifrasDocentes = [];
+                cifrasD.forEach((element: any) => {
+                  this.cifrasDocentes.push({
+                    uid: element.payload.doc.uid,
+                    ...element.payload.doc.data()
+                  })
+                })
+                this.dataDocente = this.cifrasDocentes;
+
+                this.sumaTotal = this.dataDocente.map(items => items.total).reduce((prev, curr) => prev + curr, 0);
+
+                this.sumaMujeres = this.dataDocente.map(items => items.mujeres).reduce((prev, curr) => prev + curr, 0);
+                this.sumaHombres = this.dataDocente.map(items => items.hombres).reduce((prev, curr) => prev + curr, 0);
+              })
+            )
           }
         });
       }
@@ -99,64 +124,33 @@ export class CifrasDocentesComponent implements OnInit {
   }
 
 
-  getInstitucion(id: any): Observable<any> {
-    return this.afs.collection('Instituciones').doc(id).snapshotChanges();
-  }
-  getDoc<Usuarios>(path: string, id: any) {
-    return this.afs.collection(path).doc<Usuarios>(id).valueChanges()
+  onRowEditInit(docentesCifras: CifrasDocentesI) {
+    this.clonedNivel[docentesCifras.uid] =
+      { ...docentesCifras };
   }
 
-  onRowEditInit(niveles: NivelDocentes) {
-    this.clonedNivel[niveles.idNivel] =
-      { ...niveles };
-    console.log('niveles 1', niveles);
-  }
-
-  onRowEditSave(nivelesn: NivelDocentes) {  
-    if(nivelesn.docenHombres>0 && nivelesn.docenMujeres>0 && nivelesn.docenHombres<1000 && nivelesn.docenMujeres<1000){
-      this.total = parseInt(nivelesn.docenHombres) + parseInt(nivelesn.docenMujeres);
-    nivelesn.docenTotal = this.total;
-    console.log('id Insti', this.info.idInstitucion);
-    this.infoInsti.idInstitucion = this.info.idInstitucion;
-
-    let item = this.infoInsti.cifrasDocentes?.find(item => item.idNivel === nivelesn.idNivel);
-    if (item) {
-      item.docenHombres = nivelesn.docenHombres,
-      console.log('item ', item.docenHombres);
-    }    
-
-    console.log('niveles', this.infoInsti);
-    
-      this.afs.collection("Instituciones").doc(this.infoInsti.idInstitucion).update({
-
-        //this.infoInsti.niveles = lista;
-        cifrasDocentes: this.infoInsti.cifrasDocentes,
+  onRowEditSave(cifrasD: CifrasDocentesI) {
+    if (cifrasD.hombres > 0 && cifrasD.mujeres > 0 && cifrasD.hombres < 1000 && cifrasD.mujeres < 1000) {
+      this.total = parseInt(cifrasD.hombres) + parseInt(cifrasD.mujeres);
+      cifrasD.total = this.total;
+      this.infoInsti.idInstitucion = this.info.idInstitucion;
+      this.afs.collection("CifrasDocentes").doc(cifrasD.uid).update({
+        hombres: cifrasD.hombres,
+        mujeres: cifrasD.mujeres,
+        total: cifrasD.total,
       }).then(() => {
-
         this.toastr.success('Registro actualizado exitosamente', '');
       });
-   
-
     }
-    else{
+    else {
       this.toastr.error('Error al actualizar el registro', 'ERROR');
-      delete this.dataDocente[nivelesn.idNivel];
-    } 
-    console.log('niveles 2', nivelesn);
-    console.log('object niveles', this.dataDocente);
+      delete this.dataDocente[cifrasD.uid];
+    }
 
   }
 
-  onRowEditCancel(niveles: NivelDocentes, index: number) {
-    this.dataDocente[index] = this.clonedNivel[niveles.idNivel];
-    delete this.dataDocente[niveles.idNivel];
-    console.log('niveles 3', niveles);
+  onRowEditCancel(cifrasD: CifrasDocentesI, index: number) {
+    this.dataDocente[index] = this.clonedNivel[cifrasD.uid];
+    delete this.dataDocente[cifrasD.uid];
   }
-
-  //Documento de la institucion
-  updateDoc(data: any, id: any) {
-    const collection = this.afs.collection('Instituciones');
-    return collection.doc(id).update(data);
-  }
-
 }

@@ -22,6 +22,11 @@ div {
     display: block;
 }
 
+.div-menu {
+    margin-top: 5%;
+    margin-left: 90%;
+}
+
 .mat-card {
     background: #fff;
     color: rgba(0, 0, 0, .87);
@@ -46,8 +51,9 @@ div {
 .right {
     float: left;
     position: relative;
-    left:  150px;
+    left: 150px;
 }
-.example-spacer{
+
+.example-spacer {
     flex: 1 1 auto;
 }

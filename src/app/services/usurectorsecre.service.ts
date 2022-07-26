@@ -27,7 +27,23 @@ export class UsurectorsecreService {
     public ngZone: NgZone
   ) { 
     this.arrayUsuariosRectorSecre=[];
-    this.GetUsuariosRectorSecre();
+    this.UsuarioCollection = this.afs.collection<Usuarios>('Usuarios', ref => (ref.orderBy('nombres', 'asc') && ref.where('roles','==','secretarioRector')));
+    this.Usuario = this.UsuarioCollection.valueChanges();
+    this.Usuario.subscribe(list => {
+      this.arrayUsuariosRectorSecre = list.map(item => {
+        return {
+          uid: item.uid,
+          email: item.email,
+          nomProvincia: item.nomProvincia,
+          apellidos: item.apellidos,
+          nombres: item.nombres,
+          nomInstitucion: item.nomInstitucion,
+          idInstitucion: item.idInstitucion,
+         // clave: item.clave,
+          cargo: item.roles          
+        }
+      })
+    })
   }
   GetUsuariosRectorSecre(){
     this.UsuarioCollection = this.afs.collection<Usuarios>('Usuarios', ref => (ref.orderBy('nombres', 'asc') && ref.where('roles','==','secretarioRector')));

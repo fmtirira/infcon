@@ -18,8 +18,7 @@ export class AdministradorService {
   public isEdit!: boolean;
   public isNew!: boolean;
   arrayUsuariosDirectivo: any[];
-  arrayUsuariosPresidente: any[];
-  arrayUsuariosRectorSecre: any[]; 
+  
 
   constructor(
     private afs: AngularFirestore,
@@ -28,9 +27,22 @@ export class AdministradorService {
     public ngZone: NgZone
   ) {
     this.arrayUsuariosDirectivo = [];
-    this.arrayUsuariosPresidente=[];
-    this.arrayUsuariosRectorSecre=[];  
-    this.GetUsuariosDirectivos();
+    this.UsuarioCollection = this.afs.collection<Usuarios>('Usuarios', ref => (ref.orderBy('nombres', 'asc') && ref.where('roles','==','directivo')));
+    this.Usuario = this.UsuarioCollection.valueChanges();
+    this.Usuario.subscribe(list => {
+      this.arrayUsuariosDirectivo = list.map(item => {
+        return {
+          uid: item.uid,
+          email: item.email,
+          nomProvincia: item.nomProvincia,
+          apellidos: item.apellidos,
+          nombres: item.nombres,
+          cedula: item.cedula,
+         // clave: item.clave,
+          roles: item.roles          
+        }
+      })
+    })
 
   }
 
@@ -74,34 +86,7 @@ export class AdministradorService {
     usuario.uid = id;
     return this.UsuarioCollection.add(usuario);
   }
-  /*public updateUserData(user){
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const data:Usuarios ={
-      id: user.uid,
-      email: user.email,
-      roles:{
-        rectorSecretario: true
-      }
-    }
-    return userRef.set(data,)
-  }*/
-  //no hay que utilizar todos estos metodos
-   GetUsuarios(){
-    return this.afs.collection('Usuarios')
-    .snapshotChanges()
-  }
-
-  //traer un solo usuario
-  GetUsuarioById(id: any) {
-    return this.afs.collection('Usuarios')
-      .doc(id)
-      .valueChanges()
-  }
-
-  //actualizar un director
-  ActualizarUsuario(id:string, data:any):Promise<any>{
-    return this.afs.collection('Usuarios').doc(id).update(data);
-  }
+  
   //eliminar documento
   EliminarUsuario(usuario:Usuarios){  
     deleteUser;

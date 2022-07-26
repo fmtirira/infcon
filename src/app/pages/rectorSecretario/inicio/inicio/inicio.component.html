@@ -1,65 +1,106 @@
-<app-tabsrec></app-tabsrec>
-<mat-card class="total">
-    Instituciones Educativas
-    <br>
-    <mat-divider></mat-divider>
-    <br>
-    <div style="text-align:center;">
-        {{totalInstituciones}}
-    </div>
-</mat-card>
-<mat-card class="total">
-    Estudiantes
-    <mat-divider></mat-divider>
-    <div style="text-align:center;">
-        {{totalEstudiantes}}
-    </div>
-   
-</mat-card>
-<mat-card class="total">
-    Estudiantes Hombres
-    <mat-divider></mat-divider>
-    <div style="text-align:center;">
-        {{totalEstudiantesHombres}}
-    </div>
-   
-</mat-card>
-<mat-card class="total">
-    Estudiantes Mujeres
-    <mat-divider></mat-divider>
-    <div style="text-align:center;">
-        {{totalEstudiantesMujeres}}
-    </div>
-   
-</mat-card>
-<mat-card class="total">
-    Estudiantes Sierra
-    <mat-divider></mat-divider>
-    <div style="text-align:center;">
-        {{totalEstudiantesSierra}}
-    </div>
-   
-</mat-card>
-<mat-card class="total">
-    Estudiantes Costa
-    <mat-divider></mat-divider>
-    <div style="text-align:center;">
-        {{totalEstudiantesCosta}}
-    </div>
-   
-</mat-card>
-<mat-card class="total">
-    Estudiantes Amazonía
-    <mat-divider></mat-divider>
-    <div style="text-align:center;">
-        {{totalEstudiantesAmazonia}}
-    </div>   
-</mat-card>
+<app-tabsrec *ngIf="tabsRector == true"></app-tabsrec>
+<app-tabs-directivo *ngIf="tabsDirectivo == true"></app-tabs-directivo>
+<app-tabpresi *ngIf="tabsPresidente == true"></app-tabpresi>
+<app-tabs *ngIf="tabsAdmin == true"></app-tabs>
 
-<mat-card class="total">
-    Estudiantes Insular
-    <mat-divider></mat-divider>
-    <div style="text-align:center;">
-        {{totalEstudiantesInsular}}
-    </div>   
-</mat-card>
+<div>
+    <div class="div-inicio">
+        <mat-card class="total card-arti">
+            <div class="card-image" (click)="MostrarInstituciones()">
+                <i class="fa-solid fa-school fa-3x" style="position: center;"></i>
+            </div>
+            <a style="font-weight: 600;">Instituciones Educativas</a>
+            <br>
+            <br>
+            <mat-divider></mat-divider>
+            <div style="text-align:center;">
+                <br>
+                <a style="font-weight: 600;font-size: 2em;" (click)="MostrarInstituciones()"> {{totalInstituciones}}</a>
+            </div>
+
+        </mat-card>
+        <mat-card class="total card-arti">
+            <div class="card-image" (click)="MostrarEstudiantes()">
+                <i class="fa-solid fa-users fa-3x" style="position: center;"></i>
+            </div>
+            <a style="font-weight: 600;">Estudiantes</a>
+            <br>
+            <br>
+            <mat-divider></mat-divider>
+            <div style="text-align:center;">
+                <br>
+                <a style="font-weight: 600;font-size: 2em;" (click)="MostrarEstudiantes()"> {{totalEstudiantes}}</a>
+            </div>
+
+        </mat-card>
+    </div>
+</div>
+<br>
+
+<div *ngIf="datosDivEstudiantes == true"
+    style="justify-content: center;display: flex; margin-left: auto;margin-right: 2%;">
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Costa&nbsp;&nbsp;</a>
+        <div style="text-align:center;">
+            <a>{{totalEstudiantesCosta}}</a>
+        </div>
+    </mat-card>
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Sierra&nbsp;&nbsp;</a>
+        <div style="text-align:center;">
+            <a> {{totalEstudiantesSierra}}</a>
+        </div>
+    </mat-card>
+
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Amazonía&nbsp;&nbsp;</a>
+
+        <div style="text-align:center;">
+            <a>{{totalEstudiantesAmazonia}}</a>
+        </div>
+    </mat-card>
+
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Insular&nbsp;&nbsp;</a>
+        <div style="text-align:center;">
+            <a>{{totalEstudiantesInsular}}</a>
+        </div>
+    </mat-card>
+</div>
+<div *ngIf="datosDivInstituciones == true"
+    style="justify-content: center;display: flex; margin-left: auto;margin-right: 2%;">
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Costa&nbsp;&nbsp;</a>
+        <div style="text-align:center;">
+            <a>{{institucionesCosta}}</a>
+        </div>
+    </mat-card>
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Sierra&nbsp;&nbsp;</a>
+        <div style="text-align:center;">
+            <a> {{institucionesSierra}}</a>
+        </div>
+    </mat-card>
+
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Amazonía&nbsp;&nbsp;</a>
+        <div style="text-align:center;">
+            <a>{{institucionesAmazonia}}</a>
+        </div>
+    </mat-card>
+
+    <mat-card class="total-estudiantes-provincia card-arti div-inicio">
+        <i class="fa-solid fa-users fa-2x" style="position: center;"></i>
+        <a>&nbsp;&nbsp;&nbsp;&nbsp;Insular&nbsp;&nbsp;</a>
+        <div style="text-align:center;">
+            <a>{{institucionesInsular}}</a>
+        </div>
+    </mat-card>
+</div>
