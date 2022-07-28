@@ -1,12 +1,12 @@
 <app-tabsrec *ngIf="activar"></app-tabsrec>
-<div style="display: flex; flex-direction:row; text-align: center;" *ngIf="activar">
+<div class="div-cifras" *ngIf="activar">
     <div class="card-list">
         <article class="card-arti">
             <div class="card-image">
-                <i class="fa-solid fa-users fa-3x" style="position: center;"></i>
+                <i class="fa-solid fa-users fa-3x"></i>
             </div>
             <div class="card-header">
-                <a style="padding: 0px 35%;"> {{sumaTotal}} Estudiantes</a>
+                <a> {{sumaTotal}} Estudiantes</a>
             </div>
         </article>
     </div>
@@ -16,7 +16,7 @@
                 <i class="fa-solid fa-person fa-3x"></i>
             </div>
             <div class="card-header">
-                <a style="padding: 0px 35%;"> {{sumaHombres}} Hombres</a>
+                <a> {{sumaHombres}} Hombres</a>
             </div>
         </article>
     </div>
@@ -26,7 +26,7 @@
                 <i class="fa-solid fa-person-dress fa-3x"></i>
             </div>
             <div class="card-header">
-                <a style="padding: 0px 35%;"> {{sumaMujeres}} Mujeres </a>
+                <a> {{sumaMujeres}} Mujeres</a>
             </div>
         </article>
     </div>

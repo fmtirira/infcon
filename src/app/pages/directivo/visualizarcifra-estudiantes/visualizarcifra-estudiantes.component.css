@@ -50,6 +50,8 @@ table {
   hyphens: auto
 }
 
+
+
 .mat-column-accion {
   word-wrap: break-word !important;
   white-space: unset !important;
@@ -89,11 +91,18 @@ button {
 button:hover {
   background-color: rgba(219, 215, 215, 0.904);
 }
-
-.card-list {
+.div-cifras {
   width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.card-list {
+  width: 20%;
+  margin-left: 5%;
+  margin-right: 5%;
   text-align: center;
-  padding: 0% 40% 0% 40%;
+  /* padding: 0% 40% 0% 40%; */ 
 }
 
 .div-buscar {

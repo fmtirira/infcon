@@ -1,13 +1,35 @@
 <app-tabs-directivo *ngIf="activar"></app-tabs-directivo>
-<div class="card-list" *ngIf="activar">
-    <article class="card-arti">
-        <div class="card-image">
-            <i class="fa-solid fa-users fa-3x" style="position: center;"></i>
-        </div>
-        <div class="card-header">
-            <a> {{totalDocentes}} Docentes</a>
-        </div>
-    </article>
+<div class="div-cifras" *ngIf="activar">
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-users fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a> {{totalDocentes}} Docentes</a>
+            </div>
+        </article>
+    </div>
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-person fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a> {{totalDocentesHombres}} Hombres</a>
+            </div>
+        </article>
+    </div>
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-person-dress fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a> {{totalDocentesMujeres}} Mujeres</a>
+            </div>
+        </article>
+    </div>
 </div>
 <br> 
 <div class="table-content" *ngIf="activar">

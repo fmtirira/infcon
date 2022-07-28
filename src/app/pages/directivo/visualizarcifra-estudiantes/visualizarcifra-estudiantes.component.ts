@@ -23,12 +23,16 @@ import { Usuarios } from 'src/app/models/user';
 })
 export class VisualizarcifraEstudiantesComponent implements OnInit {
   activar = false;
+  totalEstudiantes = 0;
+  totalEstudiantesHombres = 0;
+  totalEstudiantesMujeres = 0;
   public SelectedProvincia: Provincias = { id: 0, nomProvincia: '' };
   public provincias: Provincias[] = [];
   displayedColumns: string[] = ['numero', 'nomInstitucion', 'nomNivelEducacion', 'hombres', 'mujeres', 'total'];
   estudiantes: CifrasEstudiantesI[] = [];
+  estudiantesC: CifrasEstudiantesI [] = [];
   dataSource = new MatTableDataSource();
-  totalEstudiantes = 0;
+  
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -66,7 +70,12 @@ export class VisualizarcifraEstudiantesComponent implements OnInit {
         this.estudiantes = cifrasEstudiantes;
         this.dataSource.data = this.estudiantes;
         this.totalEstudiantes = 0;
-        this.totalEstudiantes += this.estudiantes.length;
+        this.estudiantes?.forEach(c => { //recorro el array cifraTotal
+          this.totalEstudiantes = this.totalEstudiantes + c.total; //acumulo el total en una variable global e imprimo en la vista el totalEstudiantes (variable)
+          this.totalEstudiantesHombres = this.totalEstudiantesHombres + c.hombres;
+          this.totalEstudiantesMujeres = this.totalEstudiantesMujeres + c.mujeres;
+
+        });
       })
     this.dataSource.paginator = this.paginator;
   }
@@ -74,8 +83,7 @@ export class VisualizarcifraEstudiantesComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.totalEstudiantes = 0;
-    this.totalEstudiantes += this.dataSource.filteredData.length;
+    
   }
 }
 

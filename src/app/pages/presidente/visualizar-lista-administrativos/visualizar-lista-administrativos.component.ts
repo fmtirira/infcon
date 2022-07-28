@@ -24,6 +24,8 @@ export class VisualizarListaAdministrativosComponent implements OnInit {
   uid: any;
   provincia: any;
   totalAdministrativos = 0;
+  totalAdministrativosHombres = 0;
+  totalAdministrativosMujeres = 0;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -52,13 +54,13 @@ export class VisualizarListaAdministrativosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
   }
   async getUid() {
     const uid = await this.authService.GetUid();
     if (uid) {
       this.uid = uid;
-      this.getInfoUser(); 
+      this.getInfoUser();
     } else {
       console.log('no existe uid');
     }
@@ -66,7 +68,7 @@ export class VisualizarListaAdministrativosComponent implements OnInit {
   getInfoUser() {
     const path = 'Usuarios';
     const id = this.uid;
-    this.getDoc<Usuarios>(path, id).subscribe(resUsuario => {
+    this.authService.GetDoc<Usuarios>(path, id).subscribe(resUsuario => {
       this.provincia = resUsuario?.nomProvincia;
 
       this.cifrasAdService.GetAdministrativosProvincia(this.provincia)
@@ -81,8 +83,12 @@ export class VisualizarListaAdministrativosComponent implements OnInit {
 
           this.dataSource.data = this.cifrasAdministrativos;
           this.totalAdministrativos = 0;
+          this.totalAdministrativosHombres = 0;
+          this.totalAdministrativosMujeres = 0;
           this.cifrasAdministrativos.forEach(total => {
-            this.totalAdministrativos = this.totalAdministrativos + total.adminTotal;
+            this.totalAdministrativos = this.totalAdministrativos + total.adminTotal; //acumulo el total en una variable global e imprimo en la vista el totalEstudiantes (variable)
+            this.totalAdministrativosHombres = this.totalAdministrativosHombres + total.adminHombres;
+            this.totalAdministrativosMujeres = this.totalAdministrativosMujeres + total.adminMujeres;
           })
         });
       this.dataSource.paginator = this.paginator;
@@ -92,11 +98,13 @@ export class VisualizarListaAdministrativosComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.totalAdministrativos = 0;
+    this.totalAdministrativosHombres = 0;
+    this.totalAdministrativosMujeres = 0;
     this.dataSource.filteredData.forEach((total: any) => {
       this.totalAdministrativos += total.adminTotal;
+      this.totalAdministrativosHombres += total.adminHombres;
+      this.totalAdministrativosMujeres += total.adminMujeres;
     })
   }
-  getDoc<Usuarios>(path: string, id: any) {
-    return this.afs.collection(path).doc<Usuarios>(id).valueChanges()
-  }
+
 }

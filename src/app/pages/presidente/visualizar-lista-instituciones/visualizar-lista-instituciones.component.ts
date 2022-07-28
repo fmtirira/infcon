@@ -100,9 +100,6 @@ export class VisualizarListaInstitucionesComponent implements OnInit {
     this.totalInstituciones += this.dataSource.filteredData.length;
   }
 
- /*  getDoc<Usuarios>(path: string, id: any) {
-    return this.afs.collection(path).doc<Usuarios>(id).valueChanges()
-  } */
   ExportarAsXLSX() {
     this.exportService.exportToExcel(this.dataSource.data, 'instituciones');
   }

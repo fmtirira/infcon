@@ -1,16 +1,38 @@
-<app-tabs-directivo></app-tabs-directivo>
-<div class="card-list">
-    <article class="card-arti">
-        <div class="card-image">
-            <i class="fa-solid fa-users fa-3x"></i>
-        </div>
-        <div class="card-header">
-            <a> {{totalEstudiantes}} Estudiantes</a>
-        </div>
-    </article>
+<app-tabs-directivo *ngIf="activar"></app-tabs-directivo>
+<div class="div-cifras" *ngIf="activar">
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-users fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a> {{totalEstudiantes}} Estudiantes</a>
+            </div>
+        </article>
+    </div>
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-person fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a> {{totalEstudiantesHombres}} Estudiantes Hombres</a>
+            </div>
+        </article>
+    </div>
+    <div class="card-list">
+        <article class="card-arti">
+            <div class="card-image">
+                <i class="fa-solid fa-person-dress fa-3x"></i>
+            </div>
+            <div class="card-header">
+                <a> {{totalEstudiantesMujeres}} Estudiantes Mujeres</a>
+            </div>
+        </article>
+    </div>
 </div>
 <br>
-<div class="table-content">
+<div class="table-content" *ngIf="activar">
     <div class="table-container mat-elevation-z8">
         <div class="div-header">
             <div class="div-button">

@@ -22,6 +22,10 @@ export class VisualizarcifraDocentesComponent implements OnInit {
   docentes: CifrasDocentesI[] = [];
   dataSource = new MatTableDataSource();
   totalDocentes = 0;
+  totalDocentesHombres = 0;
+  totalDocentesMujeres = 0;
+  
+
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -55,15 +59,22 @@ export class VisualizarcifraDocentesComponent implements OnInit {
         this.docentes = cifrasDocentes;
         this.dataSource.data = this.docentes;
         this.totalDocentes = 0;
-        this.totalDocentes += this.docentes.length;
+        this.totalDocentesHombres = 0;
+        this.totalDocentesMujeres = 0;
+        this.docentes?.forEach(c => { //recorro el array cifraTotal
+          this.totalDocentes = this.totalDocentes + c.total; //acumulo el total en una variable global e imprimo en la vista el totalEstudiantes (variable)
+          this.totalDocentesHombres = this.totalDocentesHombres + c.hombres;
+          this.totalDocentesMujeres = this.totalDocentesMujeres + c.mujeres;
+
+        });
+      
       });
     this.dataSource.paginator = this.paginator;
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.totalDocentes = 0;
-    this.totalDocentes += this.dataSource.filteredData.length;
+
   }
 
 }

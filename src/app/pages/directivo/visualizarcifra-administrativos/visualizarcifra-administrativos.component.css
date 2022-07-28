@@ -90,11 +90,19 @@ button:hover {
     background-color: rgba(219, 215, 215, 0.904);
 }
 
-.card-list {
+.div-cifras {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  .card-list {
+    width: 20%;
+    margin-left: 4%;
+    margin-right: 4%;
     text-align: center;
-    padding: 0% 40% 0% 40%;
-}
+    /* padding: 0% 40% 0% 40%; */
+  }
 
 .div-buscar {
     padding: 0% 0% 0% 0%;

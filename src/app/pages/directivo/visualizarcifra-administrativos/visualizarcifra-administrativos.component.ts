@@ -20,6 +20,8 @@ export class VisualizarcifraAdministrativosComponent implements OnInit {
   administrativos: CifrasAdministrativoI[] = [];
   dataSource = new MatTableDataSource();
   totalAdministrativos = 0;
+  totalAdministrativosHombres = 0;
+  totalAdministrativosMujeres = 0;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
@@ -27,7 +29,7 @@ export class VisualizarcifraAdministrativosComponent implements OnInit {
     private router: Router,
     public cifrasAdService: CifrasAdministrativosService,
     public toastr: ToastrService,
-  ) { 
+  ) {
     this.authService.StateUser().subscribe(idA => {
       if (idA) {
         this.authService.GetDoc<Usuarios>('Usuarios', idA.uid).subscribe(rolesV => {
@@ -51,7 +53,14 @@ export class VisualizarcifraAdministrativosComponent implements OnInit {
         this.administrativos = cifrasAdministrativos;
         this.dataSource.data = this.administrativos;
         this.totalAdministrativos = 0;
-        this.totalAdministrativos += this.administrativos.length;
+        this.totalAdministrativosHombres = 0;
+        this.totalAdministrativosMujeres = 0;
+        this.administrativos?.forEach(total => { //recorro el array cifraTotal
+          this.totalAdministrativos = this.totalAdministrativos + total.adminTotal; //acumulo el total en una variable global e imprimo en la vista el totalEstudiantes (variable)
+          this.totalAdministrativosHombres = this.totalAdministrativosHombres + total.adminHombres;
+          this.totalAdministrativosMujeres = this.totalAdministrativosMujeres + total.adminMujeres;
+
+        });
       });
     this.dataSource.paginator = this.paginator;
   }
@@ -60,7 +69,11 @@ export class VisualizarcifraAdministrativosComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.totalAdministrativos = 0;
-    this.totalAdministrativos += this.dataSource.filteredData.length;
+    this.dataSource.filteredData.forEach((total: any) => {
+      this.totalAdministrativos += total.adminTotal;
+      this.totalAdministrativosHombres += total.adminHombres;
+      this.totalAdministrativosMujeres += total.adminMujeres;
+    })
   }
 
 }
