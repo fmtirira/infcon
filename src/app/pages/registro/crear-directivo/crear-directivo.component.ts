@@ -82,7 +82,7 @@ export class CrearDirectivoComponent implements OnInit {
         else {
           const res = await this.RegistrarUsuario(this.datosDirectivo)
             .catch(error => {
-              console.log('error', error);
+              //console.log('error', error);
               this.toastr.error('Email ya se encuentra registrado', 'ERROR', {
                 positionClass: 'toast-top-right'
               });
@@ -117,7 +117,7 @@ export class CrearDirectivoComponent implements OnInit {
         positionClass: 'toast-top-right'
       });
       this.registrodForm.reset();
-      console.log('Error =>', error);
+      //console.log('Error =>', error);
     }
   }
   ExistCedulaD(cedula: any): boolean {

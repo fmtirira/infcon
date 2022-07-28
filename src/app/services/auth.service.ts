@@ -81,7 +81,7 @@ export class AuthService {
     updatePassword(user, newPassword).then(() => {
       console.log('contraseña cambiada');
     }).catch((error) => {
-      console.log(error);
+      //console.log(error);
     });
   }
 
@@ -190,7 +190,7 @@ export class AuthService {
       localStorage.removeItem('user');
       this.router.navigate(['/login']);
     }).catch((error) => {
-      console.log(error);
+      //console.log(error);
     })
   }
 }

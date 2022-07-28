@@ -119,7 +119,7 @@ export class CrearPresidenteComponent implements OnInit {
         positionClass: 'toast-top-right'
       });
       this.dialogRef.close();
-      console.log('error ->', error);
+      //console.log('error ->', error);
     }
   }
 

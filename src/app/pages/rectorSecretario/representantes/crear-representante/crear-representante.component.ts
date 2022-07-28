@@ -135,7 +135,7 @@ export class CrearRepresentanteComponent implements OnInit {
       this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
         positionClass: 'toast-top-right'
       });
-      console.log('error ->', error);
+      //console.log('error ->', error);
     }
   }
 

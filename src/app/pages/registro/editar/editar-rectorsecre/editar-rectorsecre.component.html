@@ -21,9 +21,7 @@
 
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Seleccione Institución</mat-label>
-            <!--<mat-select [(ngModel)]="SelectedProvincia.id" (change)="onSelect($event.target.value)"> acabo de agregar la funcion change-->
             <mat-select formControlName="nomInstitucion" aria-readonly="true">
-                <!--provincias esta declarado en registrop.component.ts como arrays vacios y aca lo estoy utilizando-->
                 <mat-option *ngFor="let institucion of instituciones" [value]="institucion.nomInstitucion" disabled="true">
                     {{institucion.nomInstitucion | uppercase}}
                 </mat-option>

@@ -49,7 +49,6 @@ export class EditarPerfilComponent implements OnInit {
       console.log('no existe uid');
     }
   }
-  //
   GetInfoUser() {
     const path = 'Usuarios';
     const id = this.uid;

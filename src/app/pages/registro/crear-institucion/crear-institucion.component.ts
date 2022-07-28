@@ -128,7 +128,7 @@ export class CrearInstitucionComponent implements OnInit {
         this.registroiForm.reset();
       }
     } catch (error) {
-      console.log('error ->', error);
+      //console.log('error ->', error);
     }
   }
   //para leer las instituciones que estan guardadas en la BDD- y llamo al observable para subscribirse a los cambios
