@@ -39,8 +39,8 @@ export class CrearDirectivoComponent implements OnInit {
     nombres: new FormControl('', Validators.required),
     apellidos: new FormControl('', Validators.required),
     email: new FormControl('', (Validators.required, Validators.pattern(this.emailPattern))),
-    clave: new FormControl('', (Validators.required, Validators.minLength(8))),
-    cedula: new FormControl('', (Validators.required, Validators.minLength(10)))
+    clave: new FormControl('', (Validators.required, Validators.minLength(8), Validators.maxLength(15))),
+    cedula: new FormControl('', (Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[0-9]\d*$/)))
   });
 
   constructor(
@@ -63,8 +63,9 @@ export class CrearDirectivoComponent implements OnInit {
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-      clave: ['', [Validators.required, Validators.minLength(8)]],
-      cedula: ['', [Validators.required, Validators.minLength(10)]]
+      clave: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      cedula: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[0-9]\d*$/)]]
+
     })
   }
   async Salir() {
@@ -90,7 +91,7 @@ export class CrearDirectivoComponent implements OnInit {
             })
 
           if (res) {
-            console.log('registrado con éxito');
+            
             const path = 'Usuarios';
             const id = res.user?.uid;
             this.datosDirectivo.uid = id;
@@ -139,6 +140,8 @@ export class CrearDirectivoComponent implements OnInit {
     return exist;
   }
 
+
+
   RegistrarUsuario(datos: Usuarios) {
     return this.auth.createUserWithEmailAndPassword(datos.email, datos.clave);
   }
@@ -160,18 +163,17 @@ export class CrearDirectivoComponent implements OnInit {
     return this.registrodForm.get('clave')?.hasError('required') ? 'Campo obligatorio' :
       '';
   }
+  msgValidateClaveL() {
+    return this.registrodForm.get('clave')?.hasError('minLength') ? 'mínimo 8 caracteres' :
+      '';
+  }
 
   msgValidateCedula() {
     return this.registrodForm.get('cedula')?.hasError('required') ? 'Campo obligatorio' :
-      '';
+      this.registrodForm.get('cedula')?.hasError('pattern') ? 'Formato inválido' :
+        this.registrodForm.get('cedula')?.hasError('minLength') ? 'Ingrese 10 dígitos' :
+          '';
   }
-  //Generar pass automatica - no estoy usando
-  AutoCrear(passLongitud: number) {
-    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-    var pass = '';
-    for (var i = 0; i < passLongitud; i++) {
-      pass += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return pass;
-  }
+
+
 }

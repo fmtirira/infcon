@@ -67,6 +67,9 @@ export class InicioComponent implements OnInit {
     this.getInfoUser();
     this.cifrasEService.GetAllCifrasEstudiantes()
       .subscribe(cifrasE => {
+        this.totalEstudiantes = 0; 
+        this.totalEstudiantesHombres = 0;
+        this.totalEstudiantesMujeres =0;
         cifrasE.forEach(cifrasProv => {
           this.selectProvincia = cifrasProv.nomProvincia;
           if (cifrasProv.nomProvincia === 'AZUAY' || cifrasProv.nomProvincia === 'BOLÍVAR' || cifrasProv.nomProvincia === 'CAÑAR' || cifrasProv.nomProvincia === 'CARCHI'

@@ -41,8 +41,7 @@ export class EditarDirectivoComponent implements OnInit {
     nombres: new FormControl('', Validators.required),
     apellidos: new FormControl('', Validators.required),
     email: new FormControl('', (Validators.required, Validators.pattern(this.emailPattern))),
-    clave: new FormControl('', (Validators.required, Validators.minLength(8))),
-    cedula: new FormControl('', (Validators.required, Validators.minLength(10)))
+    cedula: new FormControl('', (Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[0-9]\d*$/)))
   });
 
   constructor(
@@ -92,6 +91,8 @@ export class EditarDirectivoComponent implements OnInit {
 
   msgValidateCedula() {
     return this.editardForm.get('cedula')?.hasError('required') ? 'Campo obligatorio' :
+    this.editardForm.get('cedula')?.hasError('pattern') ? 'Formato inválido' :
+        this.editardForm.get('cedula')?.hasError('minLength') ? 'Ingrese 10 dígitos' :
       '';
   }
 

@@ -8,6 +8,7 @@ import { Usuarios } from 'src/app/models/user';
 import { AdministradorService } from 'src/app/services/administrador.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProvinciaService } from 'src/app/services/provincia.service';
+import { UsupresidentesService } from 'src/app/services/usupresidentes.service';
 
 @Component({
   selector: 'app-crear-presidente',
@@ -31,9 +32,9 @@ export class CrearPresidenteComponent implements OnInit {
     nombres: '',
     nomProvincia: '',
     emailVerified: true,
-    foto:'',
-    telefono:'',
-    prefijo:'',
+    foto: '',
+    telefono: '',
+    prefijo: '',
     roles: 'presidente'
   }
 
@@ -42,8 +43,8 @@ export class CrearPresidenteComponent implements OnInit {
     nombres: new FormControl('', Validators.required),
     apellidos: new FormControl('', Validators.required),
     email: new FormControl('', (Validators.required, Validators.pattern(this.emailPattern))),
-    clave: new FormControl('', (Validators.required, Validators.minLength(6))),
-    cedula: new FormControl('', (Validators.required, Validators.minLength(10))),
+    clave: new FormControl('', (Validators.required, Validators.minLength(8), Validators.maxLength(15))),
+    cedula: new FormControl('', (Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[0-9]\d*$/))),
     nomProvincia: new FormControl('', Validators.required)
   });
 
@@ -51,6 +52,7 @@ export class CrearPresidenteComponent implements OnInit {
     public provinciaSvc: ProvinciaService,
     private dialogRef: MatDialogRef<CrearPresidenteComponent>,
     private adminService: AdministradorService,
+    private presidenteSvc: UsupresidentesService,
     public auth: AngularFireAuth,
     private toastr: ToastrService,
     public authService: AuthService,
@@ -67,44 +69,45 @@ export class CrearPresidenteComponent implements OnInit {
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-      clave: ['', [Validators.required, Validators.minLength(8)]],
-      cedula: ['', [Validators.required, Validators.minLength(10)]],
+      clave: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
+      cedula: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[0-9]\d*$/)]],
       nomProvincia: ['', Validators.required]
     })
   }
 
-  Salir(): void {
+  async Salir() {
     this.dialogRef.close();
   }
 
-  onSelect(id: number) {
-    this.cantones = this.provinciaSvc.GetCantones()
-      .filter(item => item.id == id);
-  }
   async RegistrarP() {
     try {
       if (this.registropForm.valid) {
-        const res = await this.RegistrarUsuario(this.datosPresidente)
-          .catch(error => { 
-            this.toastr.error('Email ya se encuentra registrado', 'ERROR', {
-              positionClass: 'toast-top-right'
+        if (this.ExistCedulaP(this.datosPresidente.cedula) === true) {
+          this.toastr.warning('Ya existe usuario con esta cédula', 'DUPLICADOS');
+          this.dialogRef.close();
+        }
+        else {
+          const res = await this.RegistrarUsuario(this.datosPresidente)
+            .catch(error => {
+              this.toastr.error('Email ya se encuentra registrado', 'ERROR', {
+                positionClass: 'toast-top-right'
+              });
+              this.registropForm.reset();
             });
-            this.dialogRef.close();
-          });
-          
-        if (res) {
-          //se crea la coleccion
-          const path = 'Usuarios';
-          const id = res.user?.uid;
-          this.datosPresidente.uid = id;
-          this.datosPresidente.clave = 'cifrado';
-          await this.authService.CrearDoc(this.datosPresidente, path, id).then(() => {
-            this.toastr.success("Guardado con éxito", '', {
-              positionClass: 'toast-top-right'
+
+          if (res) {
+            //se crea la coleccion
+            const path = 'Usuarios';
+            const id = res.user?.uid;
+            this.datosPresidente.uid = id;
+            this.datosPresidente.clave = 'cifrado';
+            await this.authService.CrearDoc(this.datosPresidente, path, id).then(async () => {
+              this.toastr.success("Guardado con éxito", '', {
+                positionClass: 'toast-top-right'
+              });
+              await this.Salir();
             });
-            //this.registropForm.reset();
-            this.dialogRef.close();
-          });
+          }
         }
 
       }
@@ -112,17 +115,34 @@ export class CrearPresidenteComponent implements OnInit {
         this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
           positionClass: 'toast-top-right'
         });
-        this.dialogRef.close();
+        this.registropForm.reset();
       }
     } catch (error) {
       this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
         positionClass: 'toast-top-right'
       });
-      this.dialogRef.close();
+      this.registropForm.reset();
       //console.log('error ->', error);
     }
   }
+  ExistCedulaP(cedula: any): boolean {
+    var exist = false;
+    if (cedula) {
+      const presidenteFiltrado = this.presidenteSvc.arrayUsuariosPresidente
+        .find(presidenteFiltrobyCedula => presidenteFiltrobyCedula?.cedula === cedula);
+      if (presidenteFiltrado) {
+        exist = true;
+        console.log(' existe ');
 
+      } else {
+        console.log(' no existe');
+        exist = false;
+      }
+    } else {
+      exist = false;
+    }
+    return exist;
+  }
   msgValidateApellido() {
     return this.registropForm.get('apellidos')?.hasError('required') ? 'Campo obligatorio' :
       '';
@@ -143,7 +163,10 @@ export class CrearPresidenteComponent implements OnInit {
     return this.registropForm.get('clave')?.hasError('required') ? 'Campo obligatorio' :
       '';
   }
-
+  msgValidateClaveL() {
+    return this.registropForm.get('clave')?.hasError('minLength') ? 'mínimo 8 caracteres' :
+      '';
+  }
   msgValidateCedula() {
     return this.registropForm.get('cedula')?.hasError('required') ? 'Campo obligatorio, Cédula inválida' :
       '';

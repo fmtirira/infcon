@@ -37,7 +37,7 @@ export class ListarPresidenteComponent implements OnInit {
     emailVerified: true,
     roles: 'presidente'
   }
-  displayedColumns: string[] = ['numero', 'nombres', 'apellidos', 'email', 'nomProvincia', 'cedula', 'roles','accion'];
+  displayedColumns: string[] = ['numero', 'nombres', 'apellidos', 'email', 'nomProvincia', 'cedula', 'roles', 'accion'];
   dataSource = new MatTableDataSource();
   usuarios: Usuarios[] = [];
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -52,7 +52,7 @@ export class ListarPresidenteComponent implements OnInit {
     public adminService: AdministradorService,
     public usupresiSvc: UsupresidentesService
 
-  ) { 
+  ) {
     this.authService.StateUser().subscribe(idA => {
       if (idA) {
         this.authService.GetDoc<Usuarios>('Usuarios', idA.uid).subscribe(rolesV => {
@@ -68,11 +68,15 @@ export class ListarPresidenteComponent implements OnInit {
         })
       }
     });
-  }  
+  }
   ngOnInit(): void {
     this.provincias = this.provinciaSvc.GetProvincias();
     this.usupresiSvc.GetAllUsuarios()
-      .subscribe(usuario => this.dataSource.data = usuario);
+      .subscribe(usuario => {
+        if (usuario) {
+          this.dataSource.data = usuario;
+        }
+      });
     this.dataSource.paginator = this.paginator;
   }
 
@@ -89,7 +93,7 @@ export class ListarPresidenteComponent implements OnInit {
       this.adminService.usuarioSelectedBorrar = Object.assign({}, element);
     }
   }
-  
+
   OpenDialogp() {
     this.dialog.open(CrearPresidenteComponent, {
       width: '35%'
@@ -109,6 +113,6 @@ export class ListarPresidenteComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
- 
- 
+
+
 }

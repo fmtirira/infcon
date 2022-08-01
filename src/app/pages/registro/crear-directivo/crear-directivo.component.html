@@ -28,17 +28,22 @@
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Contaseña</mat-label>
             <input matInput type="password" placeholder="Ingrese Contraseña" [(ngModel)]="datosDirectivo.clave"
-                #claveDirectivo formControlName="clave">
-            <mat-hint align="start"><strong>*mínimo 8 caracteres</strong> </mat-hint>
-            <mat-error *ngIf="registrodForm.invalid" style="font-size: 10px ;">{{msgValidateClave()}}</mat-error>
+                #claveDirectivo formControlName="clave" minlength="8" maxlength="15">
+            <mat-hint align="start"><strong>*8 a 15 caracteres</strong> </mat-hint>
+            <mat-error *ngIf="registrodForm.invalid" style="font-size: 10px ;">{{msgValidateClave()}}
+                <mat-error *ngIf="registrodForm.invalid" style="font-size: 10px ;">{{msgValidateClaveL()}}</mat-error>
+            </mat-error>
 
         </mat-form-field>
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Cédula</mat-label>
-            <input matInput placeholder="Ingrese Cédula" [(ngModel)]="datosDirectivo.cedula" #cedulaDirectivo
-                formControlName="cedula" minlength="10" maxlength="10">
-            <mat-error *ngIf="registrodForm.invalid" style="font-size: 10px ;">{{msgValidateCedula()}}</mat-error>
-        </mat-form-field> 
+            <input matInput type="text" placeholder="Ingrese Cédula" [(ngModel)]="datosDirectivo.cedula"
+                #cedulaDirectivo formControlName="cedula" maxlength="10">
+            <mat-hint align="start"><strong>*digite 10 caracteres</strong> </mat-hint>
+            <mat-error *ngIf="registrodForm.invalid" style="font-size: 10px ;">{{msgValidateCedula()}}
+            </mat-error>
+
+        </mat-form-field>
         <br>
         <button mat-raised-button class="btnIngresar" color="primary" (click)="RegistrarD()" type="submit"
             [disabled]="registrodForm.invalid">Guardar</button>

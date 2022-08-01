@@ -74,8 +74,9 @@ export class ListarInstitucionComponent implements OnInit {
     this.provincias = this.provinciaSvc.GetProvincias();
     this.institucionService.GetAllInstituciones()
       .subscribe(institucion => {
-        this.dataSource.data = institucion
-        //console.log('datos institucion', this.dataSource.data);
+        if(institucion){
+          this.dataSource.data = institucion;
+        }        
       });
     this.dataSource.paginator = this.paginator;
   }

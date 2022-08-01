@@ -45,7 +45,7 @@ export class CrearRectorsecreComponent implements OnInit {
     nombres: new FormControl('', Validators.required),
     apellidos: new FormControl('', Validators.required),
     email: new FormControl('', (Validators.required, Validators.pattern(this.emailPattern))),
-    clave: new FormControl('', (Validators.required, Validators.minLength(6))),
+    clave: new FormControl('', (Validators.required, Validators.minLength(8), Validators.maxLength(15))),
     nomInstitucion: new FormControl('', Validators.required),
     //idInstitucion: new FormControl(null)
   });
@@ -69,7 +69,7 @@ export class CrearRectorsecreComponent implements OnInit {
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
-      clave: ['', [Validators.required, Validators.minLength(6)]],
+      clave: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
       nomInstitucion: ['', Validators.required],
       //idInstitucion: new FormControl(null)
     })
@@ -172,6 +172,10 @@ export class CrearRectorsecreComponent implements OnInit {
   }
   msgValidateClave() {
     return this.registrorecsecreForm.get('clave')?.hasError('required') ? 'Campo obligatorio' :
+      '';
+  }
+  msgValidateClaveL() {
+    return this.registrorecsecreForm.get('clave')?.hasError('minLength') ? 'mínimo 8 caracteres' :
       '';
   }
   RegistrarUsuario(datos: Usuarios) {
