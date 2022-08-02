@@ -93,7 +93,7 @@ export class CrearDirectivoComponent implements OnInit {
             });
 
           if (res) {
-
+            this.authService.VerificarUsuario();
             const path = 'Usuarios';
             const id = res.user?.uid;
             this.datosDirectivo.uid = id;

@@ -92,11 +92,13 @@ export class CrearPresidenteComponent implements OnInit {
               this.toastr.error('Email ya se encuentra registrado', 'ERROR', {
                 positionClass: 'toast-top-right'
               });
-              this.registropForm.reset();
+              this.registropForm.get('clave')?.reset();
+              this.registropForm.get('email')?.reset();
             });
 
           if (res) {
             //se crea la coleccion
+            this.authService.VerificarUsuario();
             const path = 'Usuarios';
             const id = res.user?.uid;
             this.datosPresidente.uid = id;

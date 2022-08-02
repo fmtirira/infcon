@@ -114,11 +114,14 @@ export class CrearRectorsecreComponent implements OnInit {
         } else {
           const res = await this.RegistrarUsuario(this.datosRectorSecre)
             .catch(error => {
-              console.log('error', error);
-              this.dialogRef.close();
+              this.toastr.error('Email ya se encuentra registrado', 'ERROR', {
+                positionClass: 'toast-top-right'
+              });
+              this.registrorecsecreForm.get('clave')?.reset();
+              this.registrorecsecreForm.get('email')?.reset();
             });
           if (res) {
-            console.log('registrado con éxito');
+            this.authService.VerificarUsuario();
             const path = 'Usuarios';
             const id = res.user?.uid;
             this.datosRectorSecre.uid = id;
@@ -134,13 +137,13 @@ export class CrearRectorsecreComponent implements OnInit {
         }
       }
       else {
-        this.toastr.error('Datos inválidos, Intente de nuevo form', 'ERROR', {
+        this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
           positionClass: 'toast-top-right'
         });
         this.registrorecsecreForm.reset();
       }
     } catch (error) {
-      this.toastr.error('Datos inválidos, Intente de nuevo try', 'ERROR', {
+      this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
         positionClass: 'toast-top-right'
       });
       this.dialogRef.close();
