@@ -23,13 +23,14 @@ import { EditardInstitucionComponent } from '../editar/editard-institucion/edita
   providers: [ProvinciaService]
 })
 export class ListarInstitucionComponent implements OnInit {
-  activar= false;
+  activar = false;
   public SelectedProvincia: Provincias = { id: 0, nomProvincia: '' };
   public provincias: Provincias[] = [];
   displayedColumns: string[] = ['numero', 'codigoAMIE', 'nomInstitucion', 'nomProvincia', 'accion'];
   dataSource = new MatTableDataSource();
   instituciones: InstitucionesI[] = []; //el array donde se almacena lo que se lee en firestore
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  //@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   datosInstitucion: InstitucionesI = {
@@ -53,32 +54,39 @@ export class ListarInstitucionComponent implements OnInit {
     public institucionService: InstitucionesService,
     public toastr: ToastrService,
     private dialogi: MatDialog) {
-      this.authService.StateUser().subscribe(idA => {
-        if (idA) {
-          this.authService.GetDoc<Usuarios>('Usuarios', idA.uid).subscribe(rolesV => {
-            if (rolesV) {
-              if (rolesV.roles === 'admin') {
-                this.activar = true;
-              }
-              else {
-                this.activar = false;
-                this.router.navigate(['/inicio']);
-              }
+    this.authService.StateUser().subscribe(idA => {
+      if (idA) {
+        this.authService.GetDoc<Usuarios>('Usuarios', idA.uid).subscribe(rolesV => {
+          if (rolesV) {
+            if (rolesV.roles === 'admin') {
+              this.activar = true;
             }
-          })
-        }
-      });
-     }
+            else {
+              this.activar = false;
+              this.router.navigate(['/inicio']);
+            }
+          }
+        })
+      }
+    });
+  }
 
-  ngOnInit(): void {
-    this.provincias = this.provinciaSvc.GetProvincias();
-    this.institucionService.GetAllInstituciones()
+  ngOnInit() {
+    this.institucionService.GetInstituciones()
       .subscribe(institucion => {
-        if(institucion){
-          this.dataSource.data = institucion;
-        }        
+        this.instituciones = [];
+        institucion.forEach((element: any) => {
+          this.instituciones.push({
+            uid: element.payload.doc.uid,
+            ...element.payload.doc.data()
+          })
+        })
+        this.dataSource.data = this.instituciones;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
       });
-    this.dataSource.paginator = this.paginator;
+
   }
 
   OnEdit(element: any) {

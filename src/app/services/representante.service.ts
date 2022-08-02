@@ -28,19 +28,7 @@ export class RepresentanteService {
     public ngZone: NgZone,
     public authService: AuthService,
   ) {
-    /* this.arrayRepresentante = [];
-    this.RepreCollection = afs.collection<RepresentantesI>('Representantes', ref => (ref.orderBy('nomInstitucion', 'asc')));
-    this.Representante = this.RepreCollection.valueChanges();
-    this.Representante.subscribe(list =>{
-      this.arrayRepresentante = list.map(item =>{
-        return {
-          id: item.idInstitucion,
-          uid: item.uid,
-          nombre: item.nomInstitucion,
-          email: item.email
-        }
-      });
-    });   */
+    
   }
 
   GetDoc<RepresentantesI>(path: string, id: string) {

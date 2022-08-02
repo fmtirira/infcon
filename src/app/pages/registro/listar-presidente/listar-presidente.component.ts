@@ -76,8 +76,10 @@ export class ListarPresidenteComponent implements OnInit {
         if (usuario) {
           this.dataSource.data = usuario;
         }
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
       });
-    this.dataSource.paginator = this.paginator;
   }
 
   OnEdit(element: any) {

@@ -15,7 +15,7 @@ import { CifrasDocentesService } from 'src/app/services/cifras-docentes.service'
   styleUrls: ['./visualizar-lista-docentes.component.css']
 })
 export class VisualizarListaDocentesComponent implements OnInit {
-  activar= false;
+  activar = false;
   displayedColumns: string[] = ['numero', 'nomInstitucion', 'nomNivelEducacion', 'hombres', 'mujeres', 'total'];
   docentes: CifrasDocentesI[] = [];
   dataSource = new MatTableDataSource();
@@ -30,7 +30,7 @@ export class VisualizarListaDocentesComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private cifrasDService: CifrasDocentesService,
-  ) { 
+  ) {
     this.authService.StateUser().subscribe(idA => {
       if (idA) {
         this.authService.GetDoc<Usuarios>('Usuarios', idA.uid).subscribe(rolesV => {
@@ -76,12 +76,15 @@ export class VisualizarListaDocentesComponent implements OnInit {
             })
           })
           this.dataSource.data = this.cifrasDocentes;
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+          }, 0);
           this.totalDocentes = 0;
           this.cifrasDocentes.forEach(total => {
             this.totalDocentes = this.totalDocentes + total.total;
           })
         });
-      this.dataSource.paginator = this.paginator;
+
     });
   }
 

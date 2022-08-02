@@ -17,8 +17,7 @@ export class AdministradorService {
 
   public isEdit!: boolean;
   public isNew!: boolean;
-  arrayUsuariosDirectivo: any[];
-  
+  arrayUsuariosDirectivo:any[] = [];
 
   constructor(
     private afs: AngularFirestore,
@@ -26,7 +25,7 @@ export class AdministradorService {
     public router: Router,
     public ngZone: NgZone
   ) {
-    this.arrayUsuariosDirectivo = [];
+   
     this.UsuarioCollection = this.afs.collection<Usuarios>('Usuarios', ref => (ref.orderBy('nombres', 'asc') && ref.where('roles','==','directivo')));
     this.Usuario = this.UsuarioCollection.valueChanges();
     this.Usuario.subscribe(list => {

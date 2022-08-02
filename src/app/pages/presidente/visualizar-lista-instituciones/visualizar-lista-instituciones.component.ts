@@ -85,10 +85,13 @@ export class VisualizarListaInstitucionesComponent implements OnInit {
           })
 
           this.dataSource.data = this.instituciones;
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+          }, 0);
           this.totalInstituciones = 0;
           this.totalInstituciones += this.instituciones.length;
         });
-      this.dataSource.paginator = this.paginator;
+      
 
     })
 

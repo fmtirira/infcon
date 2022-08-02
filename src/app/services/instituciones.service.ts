@@ -18,14 +18,13 @@ export class InstitucionesService {
 
   public isEdit!: boolean;
   public isNew!: boolean;
-  arrayInstitucion: any[];
+  arrayInstitucion: any[] = [];
   constructor(public auth: AngularFireAuth,
     public afs: AngularFirestore,
     public router: Router,
     public ngZone: NgZone,
     public storage: AngularFireStorage
   ) {
-    this.arrayInstitucion = [];
     this.InsCollection = afs.collection<InstitucionesI>('Instituciones', ref => (ref.orderBy('codigoAMIE', 'asc')));
     this.Institucion = this.InsCollection.valueChanges();
     this.Institucion.subscribe(list => {
@@ -58,6 +57,9 @@ export class InstitucionesService {
           return data;
         });
       }));
+  }
+  GetInstituciones():Observable<any>{
+    return this.afs.collection('Instituciones', ref => ref.orderBy('nomInstitucion','asc')).snapshotChanges();
   }
   GetAllInstitucionesProvincia(nomProvincia: string): Observable<any> {
     return this.afs.collection('Instituciones', ref => ref.where('nomProvincia', '==', nomProvincia)).snapshotChanges();

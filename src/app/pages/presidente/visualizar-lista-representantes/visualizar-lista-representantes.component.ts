@@ -83,8 +83,11 @@ export class VisualizarListaRepresentantesComponent implements OnInit {
             })
           })
           this.dataSource.data = this.representantes;
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+          }, 0);
         });
-      this.dataSource.paginator = this.paginator;
+     
     });
   }
   applyFilter(event: Event) {

@@ -65,8 +65,12 @@ export class ListarDirectivoComponent implements OnInit {
   ngOnInit(): void {
 
     this.adminService.GetAllUsuarios()
-      .subscribe(usuario => this.dataSource.data = usuario);
-    this.dataSource.paginator = this.paginator;
+      .subscribe(usuario => {
+        this.dataSource.data = usuario
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
+      });
     this.authService.GetUid();
   }
   OnEdit(element: any) {

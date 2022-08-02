@@ -71,8 +71,13 @@ export class ListarRectorsecreComponent implements OnInit {
   ngOnInit(): void {
     //this.GetPresidentes();
     this.rectorSecreSvc.GetAllUsuarios()
-      .subscribe(usuario => this.dataSource.data = usuario);
-    this.dataSource.paginator = this.paginator;
+      .subscribe(usuario => {
+        this.dataSource.data = usuario
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
+      });
+    
   }
 
   OpenDialogRecsecre() {

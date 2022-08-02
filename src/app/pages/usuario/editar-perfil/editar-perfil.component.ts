@@ -67,7 +67,8 @@ export class EditarPerfilComponent implements OnInit {
   }
   async OnSaveUsuario(data: Usuarios) {
     const pathImage = 'Usuarios';
-    const name = this.infoUsuario.roles;
+    const name1 = this.infoUsuario.uid;
+    const name = this.infoUsuario?.roles+ '/'+ name1;
     const res = await this.authService.SubirImagen(this.file, pathImage, name);
     data.foto = res;
     this.authService.StateUser().subscribe(obtenerUid => {
