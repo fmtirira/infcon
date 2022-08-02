@@ -29,7 +29,7 @@ export class VisualizarListaRepresentantesComponent implements OnInit {
   uid: any;
   provincia: any;
   instituciones: InstitucionesI[] = []; //el array donde se almacena lo que se lee en firestore
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(private authService: AuthService,
     private afs: AngularFirestore,

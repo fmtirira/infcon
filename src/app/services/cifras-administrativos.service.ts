@@ -37,8 +37,7 @@ export class CifrasAdministrativosService {
   GetAdministrativosProvincia(nomProvincia: string): Observable<any> {
     return this.afs.collection('CifrasAdministrativos', ref => ref.where('nomProvincia', '==', nomProvincia)).snapshotChanges();
   }
-  /*se pone como tipo como argumento y será del tipo de la coleccion
-  permite tener el documento por id*/
+ 
   GetDoc<CifrasAdministrativoI>(path: string, id: any) {
     return this.afs.collection(path).doc<CifrasAdministrativoI>(id).valueChanges()
   }

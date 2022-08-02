@@ -25,7 +25,7 @@ export class VisualizarInstitucionesComponent implements OnInit {
   dataSource = new MatTableDataSource();
   instituciones: InstitucionesI[] = []; //el array donde se almacena lo que se lee en firestore
   totalInstituciones = 0;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private authService: AuthService,
@@ -58,8 +58,11 @@ export class VisualizarInstitucionesComponent implements OnInit {
         this.dataSource.data = institucion;
         this.totalInstituciones = 0;
         this.totalInstituciones += institucion.length;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
       });
-    this.dataSource.paginator = this.paginator;
+    
   }
 
   applyFilter(event: Event) {

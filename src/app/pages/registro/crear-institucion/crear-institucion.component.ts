@@ -99,11 +99,11 @@ export class CrearInstitucionComponent implements OnInit {
         this.datosInstitucion.nomInstitucion = this.datosInstitucion.nomInstitucion?.toLowerCase();
         this.datosInstitucion.codigoAMIE = this.datosInstitucion.codigoAMIE?.toLowerCase();
         this.data = this.institucionService.arrayInstitucion;
-        if (this.ExistCodigo(this.datosInstitucion.codigoAMIE) === true || this.ExistNombre(this.datosInstitucion.nomInstitucion)=== true) {
+        if (this.ExistCodigo(this.datosInstitucion.codigoAMIE) === true || this.ExistNombre(this.datosInstitucion.nomInstitucion) === true) {
           this.toastr.warning('La institución ya se encuentra registrada', 'DUPLICADOS');
           this.dialogRef.close();
         }
-        else{
+        else {
           this.datosInstitucion.idInstitucion = idInstitucion;
           this.datosInstitucion.cifrasAdministrativos = uidCifraAdministrativo;
           this.datosCifrasAdministrativos.idAdmin = uidCifraAdministrativo;
@@ -111,14 +111,14 @@ export class CrearInstitucionComponent implements OnInit {
           this.datosCifrasAdministrativos.idInstitucion = this.datosInstitucion.idInstitucion;
           this.datosCifrasAdministrativos.nomProvincia = this.datosInstitucion.nomProvincia;
           await this.authService.CrearDoc(this.datosCifrasAdministrativos, 'CifrasAdministrativos', uidCifraAdministrativo).then(() => {
-  
+
           });
           await this.authService.CrearDoc(this.datosInstitucion, path, idInstitucion).then(() => {
             this.toastr.success("Guardado con éxito", '', {
               positionClass: 'toast-top-right'
             });
             this.dialogRef.close();
-          }); 
+          });
         }
       }
       else {
@@ -134,7 +134,6 @@ export class CrearInstitucionComponent implements OnInit {
   //para leer las instituciones que estan guardadas en la BDD- y llamo al observable para subscribirse a los cambios
   GetInstitucion() {
     this.authService.GetCollection<InstitucionesI>('Instituciones').subscribe(res => {
-
     })
   }
   ExistCodigo(codigoAMIE: any): boolean {

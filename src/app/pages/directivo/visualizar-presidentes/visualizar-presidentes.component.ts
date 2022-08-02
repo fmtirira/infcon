@@ -37,7 +37,7 @@ export class VisualizarPresidentesComponent implements OnInit {
   dataSource = new MatTableDataSource();
   usuarios: Usuarios[] = [];
   totalPresidentes = 0;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
@@ -76,8 +76,10 @@ export class VisualizarPresidentesComponent implements OnInit {
         this.dataSource.data = usuario;
         this.totalPresidentes = 0;
         this.totalPresidentes += usuario.length;
-      });
-    this.dataSource.paginator = this.paginator;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
+      }); 
   }
 
   applyFilter(event: Event) {

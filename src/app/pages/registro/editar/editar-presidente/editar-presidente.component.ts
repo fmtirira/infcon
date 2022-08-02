@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Provincias } from 'src/app/models/provincia.interface';
 import { Usuarios } from 'src/app/models/user';
 import { AdministradorService } from 'src/app/services/administrador.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProvinciaService } from 'src/app/services/provincia.service';
 import { CrearPresidenteComponent } from '../../crear-presidente/crear-presidente.component';
 
@@ -30,6 +31,7 @@ export class EditarPresidenteComponent implements OnInit {
   });
 
   constructor(
+    public authService: AuthService,
     private toastr: ToastrService,
     public adminService: AdministradorService,
     public provinciaSvc: ProvinciaService,

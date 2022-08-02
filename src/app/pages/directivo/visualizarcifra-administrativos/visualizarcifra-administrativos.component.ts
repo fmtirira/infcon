@@ -22,7 +22,7 @@ export class VisualizarcifraAdministrativosComponent implements OnInit {
   totalAdministrativos = 0;
   totalAdministrativosHombres = 0;
   totalAdministrativosMujeres = 0;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private authService: AuthService,
@@ -61,14 +61,19 @@ export class VisualizarcifraAdministrativosComponent implements OnInit {
           this.totalAdministrativosMujeres = this.totalAdministrativosMujeres + total.adminMujeres;
 
         });
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
       });
-    this.dataSource.paginator = this.paginator;
+
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.totalAdministrativos = 0;
+    this.totalAdministrativosHombres = 0;
+    this.totalAdministrativosMujeres = 0;
     this.dataSource.filteredData.forEach((total: any) => {
       this.totalAdministrativos += total.adminTotal;
       this.totalAdministrativosHombres += total.adminHombres;

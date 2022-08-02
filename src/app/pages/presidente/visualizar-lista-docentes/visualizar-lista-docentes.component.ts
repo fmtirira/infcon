@@ -23,7 +23,10 @@ export class VisualizarListaDocentesComponent implements OnInit {
   uid: any;
   provincia: any;
   totalDocentes = 0;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  totalDocentesHombres = 0;
+  totalDocentesMujeres = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private afs: AngularFirestore,
@@ -80,8 +83,12 @@ export class VisualizarListaDocentesComponent implements OnInit {
             this.dataSource.paginator = this.paginator;
           }, 0);
           this.totalDocentes = 0;
+          this.totalDocentesHombres = 0;
+          this.totalDocentesMujeres = 0;
           this.cifrasDocentes.forEach(total => {
             this.totalDocentes = this.totalDocentes + total.total;
+            this.totalDocentesHombres = this.totalDocentesHombres + total.hombres;
+            this.totalDocentesMujeres = this.totalDocentesMujeres + total.mujeres;
           })
         });
 
@@ -92,8 +99,12 @@ export class VisualizarListaDocentesComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.totalDocentes = 0;
+    this.totalDocentesHombres = 0;
+    this.totalDocentesMujeres = 0;
     this.dataSource.filteredData.forEach((total: any) => {
       this.totalDocentes += total.total;
+      this.totalDocentesHombres += total.hombres;
+      this.totalDocentesMujeres += total.mujeres;
     })
   }
   getDoc<Usuarios>(path: string, id: any) {

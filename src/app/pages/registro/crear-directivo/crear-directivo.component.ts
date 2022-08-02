@@ -45,7 +45,7 @@ export class CrearDirectivoComponent implements OnInit {
 
   constructor(
 
-    private authService: AuthService,
+    public authService: AuthService,
     private presidenteSvc: UsupresidentesService,
     private rectorSvc: UsurectorsecreService,
     private directorSvc: AdministradorService,
@@ -64,7 +64,7 @@ export class CrearDirectivoComponent implements OnInit {
       apellidos: ['', Validators.required],
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]],
       clave: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(15)]],
-      cedula: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10),Validators.pattern(/^[0-9]\d*$/)]]
+      cedula: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^[0-9]\d*$/)]]
 
     })
   }
@@ -87,11 +87,13 @@ export class CrearDirectivoComponent implements OnInit {
               this.toastr.error('Email ya se encuentra registrado', 'ERROR', {
                 positionClass: 'toast-top-right'
               });
-              this.registrodForm.reset();
-            })
+              this.registrodForm.get('clave')?.reset();
+              this.registrodForm.get('email')?.reset();
+              //this.registrodForm.reset();
+            });
 
           if (res) {
-            
+
             const path = 'Usuarios';
             const id = res.user?.uid;
             this.datosDirectivo.uid = id;
@@ -139,8 +141,6 @@ export class CrearDirectivoComponent implements OnInit {
     }
     return exist;
   }
-
-
 
   RegistrarUsuario(datos: Usuarios) {
     return this.auth.createUserWithEmailAndPassword(datos.email, datos.clave);

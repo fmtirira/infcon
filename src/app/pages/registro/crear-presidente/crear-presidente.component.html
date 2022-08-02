@@ -34,7 +34,7 @@
         <br>
         <mat-form-field class="full-width" appearance="outline">
             <mat-label>Cédula</mat-label>
-            <input matInput type="text" placeholder="Cédula" [(ngModel)]="datosPresidente.cedula" #cedula formControlName="cedula" minlength="10" maxlength="10"> 
+            <input matInput type="text" placeholder="Cédula" [(ngModel)]="datosPresidente.cedula" #cedula formControlName="cedula" minlength="10" maxlength="10" (keypress)="authService.SoloNumeros($event)"> 
             <mat-error *ngIf="registropForm.invalid" style="font-size: 10px ;">{{msgValidateCedula()}}</mat-error>
         </mat-form-field>        
         <br>

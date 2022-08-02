@@ -29,7 +29,7 @@ export class ListarRepresentantesComponent implements OnInit {
   dataSource = new MatTableDataSource();
   representantes: any[] = [];
   instituciones: InstitucionesI[] = []; //el array donde se almacena lo que se lee en firestore
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private authService: AuthService,
@@ -64,8 +64,11 @@ export class ListarRepresentantesComponent implements OnInit {
                 })
               })
               this.dataSource.data = this.representantes;
+              setTimeout(() => {
+                this.dataSource.paginator = this.paginator;
+              }, 0);
             }))
-          this.dataSource.paginator = this.paginator;
+         
         }
       })
     }

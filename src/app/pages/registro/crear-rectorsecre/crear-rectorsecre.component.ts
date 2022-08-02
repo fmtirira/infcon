@@ -97,7 +97,7 @@ export class CrearRectorsecreComponent implements OnInit {
         this.datosRectorSecre.nomInstitucion = this.nombreInstitucionSeleccionada;
         this.datosRectorSecre.idInstitucion = this.institucionSeleccionada;
         const resp = this.usuRectorSecreSvc.arrayUsuariosRectorSecre.find(respuesta => respuesta.nomInstitucion === this.datosRectorSecre.nomInstitucion);
-        console.log('resp', resp.nomInstitucion);
+
         if (resp) {
           console.log('existe')
           this.informacion = true;
@@ -114,7 +114,7 @@ export class CrearRectorsecreComponent implements OnInit {
         } else {
           const res = await this.RegistrarUsuario(this.datosRectorSecre)
             .catch(error => {
-
+              console.log('error', error);
               this.dialogRef.close();
             });
           if (res) {
@@ -134,13 +134,13 @@ export class CrearRectorsecreComponent implements OnInit {
         }
       }
       else {
-        this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
+        this.toastr.error('Datos inválidos, Intente de nuevo form', 'ERROR', {
           positionClass: 'toast-top-right'
         });
         this.registrorecsecreForm.reset();
       }
     } catch (error) {
-      this.toastr.error('Datos inválidos, Intente de nuevo', 'ERROR', {
+      this.toastr.error('Datos inválidos, Intente de nuevo try', 'ERROR', {
         positionClass: 'toast-top-right'
       });
       this.dialogRef.close();

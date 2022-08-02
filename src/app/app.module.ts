@@ -71,7 +71,6 @@ import { VisualizarListaDocentesComponent } from './pages/presidente/visualizar-
 import { VisualizarListaAdministrativosComponent } from './pages/presidente/visualizar-lista-administrativos/visualizar-lista-administrativos.component';
 import { TabpresiComponent } from './pages/header/menu/tabpresi/tabpresi.component';
 import { VisualizarListaRepresentantesComponent } from './pages/presidente/visualizar-lista-representantes/visualizar-lista-representantes.component';
-import { ExporterService } from './services/exporter.service';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { ListarInstitucionComponent } from './pages/registro/listar-institucion/listar-institucion.component';
 import { EditardInstitucionComponent } from './pages/registro/editar/editard-institucion/editard-institucion.component';
@@ -147,7 +146,7 @@ import { EditardInstitucionComponent } from './pages/registro/editar/editard-ins
     DividerModule,
     MatTableExporterModule
   ],
-  providers: [AuthService, ExporterService],
+  providers: [AuthService],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

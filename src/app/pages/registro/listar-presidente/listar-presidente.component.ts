@@ -40,7 +40,7 @@ export class ListarPresidenteComponent implements OnInit {
   displayedColumns: string[] = ['numero', 'nombres', 'apellidos', 'email', 'nomProvincia', 'cedula', 'roles', 'accion'];
   dataSource = new MatTableDataSource();
   usuarios: Usuarios[] = [];
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private dialog: MatDialog,

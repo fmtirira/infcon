@@ -24,9 +24,8 @@ export class VisualizarcifraDocentesComponent implements OnInit {
   totalDocentes = 0;
   totalDocentesHombres = 0;
   totalDocentesMujeres = 0;
-  
 
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private afs: AngularFirestore,
@@ -67,13 +66,22 @@ export class VisualizarcifraDocentesComponent implements OnInit {
           this.totalDocentesMujeres = this.totalDocentesMujeres + c.mujeres;
 
         });
-      
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
       });
-    this.dataSource.paginator = this.paginator;
   }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.totalDocentes = 0;
+    this.totalDocentesHombres = 0;
+    this.totalDocentesMujeres = 0;
+    this.dataSource.filteredData.forEach((total: any) => {
+      this.totalDocentes += total.total;
+      this.totalDocentesHombres += total.hombres;
+      this.totalDocentesMujeres += total.mujeres;
+    })
 
   }
 

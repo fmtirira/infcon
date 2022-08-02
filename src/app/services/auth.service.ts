@@ -165,26 +165,7 @@ export class AuthService {
         .subscribe();
     });
   }
-  SetUserData(usuario: any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(
-      `Usuarios/${usuario.uid}`
-    );
-    const userData: Usuarios = {
-      uid: usuario.uid,
-      email: usuario.email,
-      clave: usuario.clave,
-      cedula: usuario.cedula,
-      apellidos: usuario.apellidos,
-      nombres: usuario.nombres,
-      nomProvincia: usuario.nomProvincia,
-      emailVerified: usuario.emailVerified,
-      roles: usuario.roles,
-    };
-    return userRef.set(userData, {
-      merge: true,
-    });
-  }
-
+  
   async SignOut() {
     return this.auth.signOut().then(() => {
       localStorage.removeItem('user');
@@ -192,6 +173,13 @@ export class AuthService {
     }).catch((error) => {
       //console.log(error);
     })
+  }
+  SoloNumeros(event: any) {
+    var key = window.event ? event.which : event.keyCode;
+    if (key < 48 || key > 57) {
+      event.preventDefault();
+    }
+
   }
 }
 

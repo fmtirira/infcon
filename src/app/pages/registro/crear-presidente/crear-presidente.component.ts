@@ -143,6 +143,8 @@ export class CrearPresidenteComponent implements OnInit {
     }
     return exist;
   }
+
+  
   msgValidateApellido() {
     return this.registropForm.get('apellidos')?.hasError('required') ? 'Campo obligatorio' :
       '';

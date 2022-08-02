@@ -10,7 +10,6 @@ import { Usuarios } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { InstitucionesService } from 'src/app/services/instituciones.service';
 import { ProvinciaService } from 'src/app/services/provincia.service';
-import { ExporterService } from 'src/app/services/exporter.service';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-visualizar-lista-instituciones',
@@ -29,7 +28,7 @@ export class VisualizarListaInstitucionesComponent implements OnInit {
   uid: any;
   provincia: any;
   totalInstituciones = 0;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private afs: AngularFirestore,
@@ -37,8 +36,7 @@ export class VisualizarListaInstitucionesComponent implements OnInit {
     private authService: AuthService,
     public provinciaSvc: ProvinciaService,
     public institucionService: InstitucionesService,
-    public toastr: ToastrService,
-    private exportService: ExporterService
+    public toastr: ToastrService
   ) {this.authService.StateUser().subscribe(idA => {
     if (idA) {
       this.authService.GetDoc<Usuarios>('Usuarios', idA.uid).subscribe(rolesV => {
@@ -101,13 +99,6 @@ export class VisualizarListaInstitucionesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.totalInstituciones = 0;
     this.totalInstituciones += this.dataSource.filteredData.length;
-  }
-
-  ExportarAsXLSX() {
-    this.exportService.exportToExcel(this.dataSource.data, 'instituciones');
-  }
-  ExportarAsXLSXFiltered() {
-    this.exportService.exportToExcel(this.dataSource.filteredData, 'instituciones');
   }
 
 }

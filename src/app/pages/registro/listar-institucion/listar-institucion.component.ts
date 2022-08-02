@@ -30,7 +30,6 @@ export class ListarInstitucionComponent implements OnInit {
   dataSource = new MatTableDataSource();
   instituciones: InstitucionesI[] = []; //el array donde se almacena lo que se lee en firestore
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  //@ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   datosInstitucion: InstitucionesI = {

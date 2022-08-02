@@ -33,7 +33,7 @@ export class VisualizarcifraEstudiantesComponent implements OnInit {
   estudiantesC: CifrasEstudiantesI [] = [];
   dataSource = new MatTableDataSource();
   
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   constructor(private authService: AuthService,
@@ -76,13 +76,24 @@ export class VisualizarcifraEstudiantesComponent implements OnInit {
           this.totalEstudiantesMujeres = this.totalEstudiantesMujeres + c.mujeres;
 
         });
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
       })
-    this.dataSource.paginator = this.paginator;
+    
   }
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.totalEstudiantes = 0;
+    this.totalEstudiantesHombres = 0;
+    this.totalEstudiantesMujeres = 0;
+    this.dataSource.filteredData.forEach((total: any) => {
+      this.totalEstudiantes += total.total;
+      this.totalEstudiantesHombres += total.hombres;
+      this.totalEstudiantesMujeres += total.mujeres;
+    })
     
   }
 }

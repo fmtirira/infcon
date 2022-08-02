@@ -21,7 +21,7 @@ export class VisualizarRepresentantesComponent implements OnInit {
   dataSource = new MatTableDataSource();
   representantes: any[] = [];
 
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private authService:AuthService,
@@ -48,8 +48,13 @@ export class VisualizarRepresentantesComponent implements OnInit {
 
   ngOnInit() {
     this.representanteService.GetAllRepresentantes()
-      .subscribe(representante => this.dataSource.data = representante);
-    this.dataSource.paginator = this.paginator;
+      .subscribe(representante => {
+        this.dataSource.data = representante;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+        }, 0);
+      });
+   
 
   }
 

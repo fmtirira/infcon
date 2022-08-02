@@ -38,8 +38,7 @@ export class CifrasEstudiantesService {
         })
       })
     }
-   /*se pone como tipo como argumento y será del tipo de la coleccion
-   permite tener el documento por id*/
+   
    GetDoc<CifrasEstudiantesI>(path: string, id: any) {
     return this.afs.collection(path).doc<CifrasEstudiantesI>(id).valueChanges()
   }
@@ -61,6 +60,9 @@ export class CifrasEstudiantesService {
   }
   GetEstudiantesProvincia(nomProvincia: string): Observable<any> {
     return this.afs.collection('CifrasEstudiantes', ref => ref.where('nomProvincia', '==', nomProvincia)).snapshotChanges();
+  }
+  GetEstudiantesInstitucion(idInstitucion: string): Observable<any> {
+    return this.afs.collection('CifrasEstudiantes', ref => ref.where('idInstitucion', '==', idInstitucion)).snapshotChanges();
   }
   UpdateCifrasEstudiantes(cifrasEstudiantes: CifrasEstudiantesI){
     return this.CifrasEstudiantesCollection.doc(cifrasEstudiantes.uid).update(cifrasEstudiantes);

@@ -26,7 +26,7 @@ export class VisualizarListaAdministrativosComponent implements OnInit {
   totalAdministrativos = 0;
   totalAdministrativosHombres = 0;
   totalAdministrativosMujeres = 0;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private afs: AngularFirestore,
@@ -90,8 +90,11 @@ export class VisualizarListaAdministrativosComponent implements OnInit {
             this.totalAdministrativosHombres = this.totalAdministrativosHombres + total.adminHombres;
             this.totalAdministrativosMujeres = this.totalAdministrativosMujeres + total.adminMujeres;
           })
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+          }, 0);
         });
-      this.dataSource.paginator = this.paginator;
+
     });
   }
   applyFilter(event: Event) {

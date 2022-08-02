@@ -72,7 +72,7 @@ export class ListarRectorsecreComponent implements OnInit {
     //this.GetPresidentes();
     this.rectorSecreSvc.GetAllUsuarios()
       .subscribe(usuario => {
-        this.dataSource.data = usuario
+        this.dataSource.data = usuario;
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
         }, 0);

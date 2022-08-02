@@ -23,7 +23,10 @@ export class VisualizarListaEstudiantesComponent implements OnInit {
   uid: any;
   provincia: any;
   totalEstudiantes = 0;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  totalEstudiantesHombres = 0;
+  totalEstudiantesMujeres = 0;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   constructor(
     private afs: AngularFirestore,
@@ -46,7 +49,7 @@ export class VisualizarListaEstudiantesComponent implements OnInit {
         })
       }
     });
-   }
+  }
 
   ngOnInit(): void {
     this.getUid();
@@ -78,12 +81,19 @@ export class VisualizarListaEstudiantesComponent implements OnInit {
           })
           this.dataSource.data = this.cifrasEstudiantes;
           this.totalEstudiantes = 0;
+          this.totalEstudiantesHombres = 0;
+          this.totalEstudiantesMujeres = 0;
           this.cifrasEstudiantes.forEach(total => {
             this.totalEstudiantes = this.totalEstudiantes + total.total;
+            this.totalEstudiantesHombres = this.totalEstudiantesHombres + total.hombres;
+          this.totalEstudiantesMujeres = this.totalEstudiantesMujeres + total.mujeres;
           })
+          setTimeout(() => {
+            this.dataSource.paginator = this.paginator;
+          }, 0);
         });
-        
-      this.dataSource.paginator = this.paginator;
+
+
     });
   }
 
@@ -91,8 +101,12 @@ export class VisualizarListaEstudiantesComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
     this.totalEstudiantes = 0;
-    this.dataSource.filteredData.forEach((total:any)=>{
-      this.totalEstudiantes +=total.total;
+    this.totalEstudiantesHombres = 0;
+    this.totalEstudiantesMujeres = 0;
+    this.dataSource.filteredData.forEach((total: any) => {
+      this.totalEstudiantes += total.total;
+      this.totalEstudiantesHombres += total.hombres;
+      this.totalEstudiantesMujeres += total.mujeres;
     })
   }
 
